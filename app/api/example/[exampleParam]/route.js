@@ -19,7 +19,7 @@ export async function PUT(req, { params }) {
 
 export async function PATCH(req, { params }) {
     const { exampleParam } = await params;
-    return new NextResponse.json({ message: `Hello from example PATCH API route with param: ${exampleParam}` }, { status: 200 });
+    return NextResponse.json({ message: `Hello from example PATCH API route with param: ${exampleParam}` }, { status: 200 });
 }
 
 export async function DELETE(req, { params }) {
