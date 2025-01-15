@@ -1,45 +1,59 @@
 'use client';
+
 import React, { useState } from 'react';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import handleSubmit from '@/lib/exampleLogin.mjs';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Handle login logic here
-        console.log('Email:', email);
-        console.log('Password:', password);
-    };
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', width: '300px' }}>
-                <h2>Login</h2>
-                <label>
-                    Email:
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        style={{ marginBottom: '10px', padding: '8px' }}
-                    />
-                </label>
-                <label>
-                    Password:
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        style={{ marginBottom: '10px', padding: '8px' }}
-                    />
-                </label>
-                <button type="submit" style={{ padding: '10px', backgroundColor: '#4CAF50', color: 'white', border: 'none', cursor: 'pointer' }}>
-                    Login
-                </button>
-            </form>
+        <div className="flex flex-col min-h-screen">
+            {/* Header */}
+            <Header />
+
+            {/* Main Content */}
+            <main className="flex-grow p-4">
+                <div className="max-w-sm mx-auto p-6 rounded-lg shadow-lg border border-base-300">
+                    <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+                    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+                        <label className="flex flex-col">
+                            Email:
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                autoComplete='email'
+                                required
+                                className="mt-1 p-2 border border-gray-300 rounded-md"
+                            />
+                        </label>
+                        <label className="flex flex-col">
+                            Password:
+                            <input
+                                type="password"
+                                value={password}
+                                autoComplete='current-password'
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                                className="mt-1 p-2 border border-gray-300 rounded-md"
+                            />
+                        </label>
+                        <input
+                            type="button"
+                            value="Login"
+                            onClick={() => handleSubmit(email, password)}
+                            className="mt-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600 cursor-pointer"
+                        />
+                    </form>
+                </div>
+            </main>
+
+            {/* Footer */}
+            <Footer />
         </div>
     );
 };

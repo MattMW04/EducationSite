@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import connectDB from "@/server/connectDB.mjs";
 import User from "@/server/models/User.mjs";
+import GoogleProvider from "next-auth/providers/google";
 
 
 export const authOptions = {
@@ -37,6 +38,10 @@ export const authOptions = {
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
+    // GoogleProvider({
+    //  clientId: process.env.GOOGLE_ID,
+    //  clientSecret: process.env.GOOGLE_SECRET,
+    //}),
   ],
   callbacks: {
     async session({ session, token }) {
