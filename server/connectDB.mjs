@@ -1,13 +1,17 @@
 import mongoose from 'mongoose';
 
-const uri = process.env.MONGODB_URI ;
+const uri = process.env.MONGODB_URI;
+
+if (!uri) {
+  throw new Error("MONGODB_URI environment variable is not set");
+}
 
 let isConnected = false;
 
 async function connectDB() {
   if (isConnected) {
     console.log("Using existing connection.");
-    return mongoose
+    return mongoose.connection;
   }
 
   try {
@@ -19,7 +23,7 @@ async function connectDB() {
     return mongoose.connection;
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
-    throw new Error("Database connection failed");
+    throw new Error("Error connecting to MongoDB");
   } 
 }
 
