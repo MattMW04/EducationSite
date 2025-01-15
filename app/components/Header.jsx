@@ -22,15 +22,12 @@ const Header = () => {
 
     return (
         <div className="flex flex-col">
-            
             <header className="bg-base-200">
                 <nav className="navbar px-4 flex justify-between items-center">
-                    
                     <div className="flex-none">
-                        <span className="text-xl font-bold">EducationApp</span>
+                        <span className="text-xl font-bold">AccessEDUK</span>
                     </div>
 
-                    
                     <div className="flex-1 flex justify-center space-x-8">
                         <Link href="/" className="btn btn-ghost">
                             Home
@@ -38,8 +35,8 @@ const Header = () => {
                         <Link href="/example-page" className="btn btn-ghost">
                             Example Page
                         </Link>
-                        <Link href="/Account/Login" className="btn btn-ghost">
-                            Login
+                        <Link href="/testMetaData" className="btn btn-ghost">
+                            Test MetaData
                         </Link>
                     </div>
 

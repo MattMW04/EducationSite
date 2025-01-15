@@ -1,8 +1,7 @@
-'use client'; // This ensures that the component is treated as a client-side component
 
 import localFont from "next/font/local";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
+import ClientSessionProvider from "./components/ClientSessionProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,6 +15,12 @@ const geistMono = localFont({
 });
 
 
+export const metadata = {
+  title: 'AccessEDUK ',
+  description: 'This is the home page for the AccessEDUK website',
+  keywords: ['AccessEDUK', 'Home Page', 'Next.js', 'React', 'Tailwind CSS'],
+};
+
 
 export default function RootLayout({ children }) {
   return (
@@ -23,7 +28,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SessionProvider>{children}  </SessionProvider>
+        <ClientSessionProvider>
+          {children}
+        </ClientSessionProvider>
         
         
       </body>
