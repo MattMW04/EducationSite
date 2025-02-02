@@ -14,7 +14,7 @@ const Header = () => {
     }, []);
 
     // Unified theme change handler
-    const handleThemeChange = (newTheme) => {
+    const handleThemeChange = (newTheme: string) => {
         setTheme(newTheme);
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
@@ -23,12 +23,12 @@ const Header = () => {
     return (
         <div className="flex flex-col">
             <header className="bg-base-200">
-                <nav className="navbar px-4 flex justify-between items-center">
+                <nav className="navbar px-4 flex justify-between items-center flex-wrap mr-4">
                     <div className="flex-none">
                         <span className="text-xl font-bold">AccessEDUK</span>
                     </div>
 
-                    <div className="flex-1 flex justify-center space-x-8">
+                    <div className="flex-1 flex justify-center space-x-8 mt-2 md:mt-0">
                         <Link href="/" className="btn btn-ghost">
                             Home
                         </Link>
@@ -40,7 +40,7 @@ const Header = () => {
                         </Link>
                     </div>
 
-                    <div className="flex-none flex items-center space-x-4">
+                    <div className="flex-none flex items-center space-x-4 mt-2 md:mt-0">
                         {/* Theme Toggle */}
                         <div className="flex items-center space-x-2 mr-4">
                             <span className="text-sm font-medium" data-tip="Toggle light theme">
@@ -69,9 +69,9 @@ const Header = () => {
                                 <option value="retro">Retro</option>
                             </select>
                         
-                        <Link href="/Account/Login" className="btn btn-ghost ml-4">
-                            Login
-                        </Link>
+                            <Link href="/Account/Login" className="btn btn-ghost ml-4">
+                                Login
+                            </Link>
                         </div>
                     </div>
                 </nav>
