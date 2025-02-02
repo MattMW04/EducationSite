@@ -35,8 +35,8 @@ export const authOptions = {
       },
     }), // GitHubProvider used for OAuth for Vercel deployment
     GitHubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+      clientId: process.env.GH_OA_ID,
+      clientSecret: process.env.GH_OA_SECRET,
     }),
     // GoogleProvider({
     //  clientId: process.env.GOOGLE_ID,
