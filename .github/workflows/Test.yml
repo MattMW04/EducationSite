@@ -1,9 +1,17 @@
 name: Test Code Before Merging
 
 on:
+  # Trigger on pull requests targeting the main or Staging branches
   pull_request:
     branches:
-      - main, Staging
+      - main
+      - Staging
+
+  # Trigger on pushes to the main or Staging branches
+  push:
+    branches:
+      - main
+      - Staging
 
 jobs:
   test:
@@ -54,4 +62,5 @@ jobs:
       # Step 7: Run Cypress tests
       - name: Run Cypress tests
         run: npx cypress run
+
 
