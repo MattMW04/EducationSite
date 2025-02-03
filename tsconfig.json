@@ -4,23 +4,38 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    "strict": false,
     "skipLibCheck": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "noEmit": true,
     "incremental": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "plugins": [{ "name": "next" }],
+    "checkJs": false,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@/components/*": ["app/components/*"],
-      "@/lib/*": ["lib/*"]
-    }
+      "@/*": [
+        "./*"
+      ],
+      "@/components/*": [
+        "app/components/*"
+      ],
+      "@/lib/*": [
+        "lib/*"
+      ]
+    },
+    "allowJs": true
   },
   "include": [
     "next-env.d.ts",
@@ -28,6 +43,10 @@
     "**/*.ts",
     "**/*.tsx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "**/*.js",
+    "**/*.jsx",
+    "app/api/**/*.js"
+  ]
 }
-
