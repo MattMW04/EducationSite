@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import NavBar from './Navbar/NavBar';
 
 const Header = () => {
     const [theme, setTheme] = useState('sunset');
@@ -28,17 +29,7 @@ const Header = () => {
                         <span className="text-xl font-bold">AccessEDUK</span>
                     </div>
 
-                    <div className="flex-1 flex justify-center space-x-8 mt-2 md:mt-0">
-                        <Link href="/" className="btn btn-ghost">
-                            Home
-                        </Link>
-                        <Link href="/example-page" className="btn btn-ghost">
-                            Example Page
-                        </Link>
-                        <Link href="/testMetaData" className="btn btn-ghost">
-                            Test MetaData
-                        </Link>
-                    </div>
+                    <NavBar />
 
                     <div className="flex-none flex items-center space-x-4 mt-2 md:mt-0">
                         {/* Theme Toggle */}
@@ -68,10 +59,6 @@ const Header = () => {
                                 <option value="sunset">Sunset</option>
                                 <option value="retro">Retro</option>
                             </select>
-                        
-                            <Link href="/Account/Login" className="btn btn-ghost ml-4">
-                                Login
-                            </Link>
                         </div>
                     </div>
                 </nav>
