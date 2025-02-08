@@ -22,16 +22,24 @@ export const authOptions: NextAuthOptions = {
                 await connectDB();
 
                 const user = await User.findOne({ username: credentials.username });
-                if (!user || !(await bcrypt.compare(credentials.password, user.password))) {
-                    throw new Error("Invalid credentials. Please check your details and try again.");
+                if (!user) {
+                    throw new Error("Username not found. Please check your username and try again.");
                 }
 
-                return { id: user._id.toString(), name: user.username, role: user.role };
+                const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+                console.log("Credentials Password:  ", credentials.password);
+                console.log("User Password:  ", user.password);
+                console.log("isPasswordValid:", isPasswordValid);
+                if (!isPasswordValid) {
+                    throw new Error("Incorrect password. Please check your password and try again.");
+                }
+
+                return { id: user._id.toString(), name: user.username};
             },
         }),
         GitHubProvider({
-            clientId: process.env.GH_OA_ID!,
-            clientSecret: process.env.GH_OA_SECRET!,
+            clientId: process.env.GH_OA_ID,
+            clientSecret: process.env.GH_OA_SECRET,
         }),
     ],
     callbacks: {
@@ -49,9 +57,6 @@ export const authOptions: NextAuthOptions = {
             }
             return session;
         },
-    },
-    pages: {
-        error: "/auth/error",
     },
     debug: process.env.NODE_ENV === "development",
 };
