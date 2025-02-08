@@ -20,9 +20,7 @@ export default function FullNav() {
             <Link href="/Account/SignUp" className="flex-1 text-center btn btn-ghost">
                 Sign Up
             </Link>
-            <Link href="/Account/" className="flex-1 text-center btn btn-ghost">
-                Styled Login
-            </Link>
+            
         </div>
     );
 };

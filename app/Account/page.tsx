@@ -1,13 +1,12 @@
 'use client'
 import React from 'react';
 import { signIn } from 'next-auth/react';
+import FormWrapper from '../components/AccountForms/FormWrapper';
 
 const LoginForm = () => {
     return (
         <div className="bg-background min-h-screen flex items-center justify-center p-4">
-            <div className="bg-cardBackground p-8 rounded-2xl shadow-lg w-full max-w-sm">
-                <h2 className="text-headerText text-3xl font-bold text-center mb-6">Login</h2>
-                
+            <FormWrapper title="Login">
                 <form className="space-y-4">
                     <div>
                         <label className="block text-bodyText font-medium mb-1" htmlFor="username">
@@ -58,7 +57,7 @@ const LoginForm = () => {
                         Sign up here
                     </a>
                 </p>
-            </div>
+            </FormWrapper>
         </div>
     );
 };
