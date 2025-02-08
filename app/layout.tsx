@@ -2,6 +2,10 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import ClientSessionProvider from "./components/ClientSessionProvider";
+import 'react-toastify/dist/ReactToastify.css'; 
+import { ToastContainer } from "react-toastify";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,17 +26,22 @@ export const metadata = {
 };
 
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-theme="sunset">
+    <html lang="en" className="bg-#EAF4fa">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-#EAF4fa`}
       >
         <ClientSessionProvider>
+          {/* Header with Navbar */}
+          <Header />
           {children}
+          {/* Footer */}
+          <Footer />
         </ClientSessionProvider>
         
-        
+        {/* ToastContainer placed globally */}
+        <ToastContainer />
       </body>
     </html>
   );

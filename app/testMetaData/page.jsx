@@ -13,17 +13,11 @@ export const metadata = {
 export default function ExampleMetaDataPage() {
     return (
         <div className="flex flex-col min-h-screen">
-            {/* Header with Navbar */}
-            <Header />
-            
             {/* Main Content */}
             <main className="flex-grow p-4">
                 <h1 className="text-2xl font-bold mb-4">Example Meta Data page</h1>
                 <p className="mb-4">This is an example page in Next.js using meta data - look at title at top and inspect to see</p>
             </main>
-            
-            {/* Footer */}
-            <Footer />
         </div>
     );
 }
