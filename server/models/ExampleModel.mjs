@@ -14,6 +14,6 @@ const exampleSchema = new mongoose.Schema({
 });
 
 
-const Recipe = mongoose.models.ExampleModel || mongoose.model('Example', exampleSchema);
+const Example = mongoose.models.ExampleModel || mongoose.model('Example', exampleSchema);
 
-export default Recipe;
+export default Example;

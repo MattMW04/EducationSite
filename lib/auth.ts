@@ -38,8 +38,8 @@ export const authOptions: NextAuthOptions = {
             },
         }),
         GitHubProvider({
-            clientId: process.env.GH_OA_ID!,
-            clientSecret: process.env.GH_OA_SECRET!,
+            clientId: process.env.GH_OA_ID,
+            clientSecret: process.env.GH_OA_SECRET,
         }),
     ],
     callbacks: {
