@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 import connectDB from "@/server/connectDB.mjs";
 import User from "@/server/models/User.mjs";
 import bcrypt from "bcrypt";
@@ -41,6 +42,11 @@ export const authOptions: NextAuthOptions = {
             clientId: process.env.GH_OA_ID,
             clientSecret: process.env.GH_OA_SECRET,
         }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_OA_ID,
+            clientSecret: process.env.GOOGLE_OA_SECRET,
+        }),
+
     ],
     callbacks: {
         async jwt({ token, user }) {
