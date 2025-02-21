@@ -1,18 +1,48 @@
 'use client';
 
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import NavBar from './Navbar/NavBar';
+import FullNav from './Navbar/FullNav';
+import React, { useState, useEffect } from 'react';
+import HamburgerMenu from './Navbar/HamburgerMenu';
 
 const Header = () => {
+    const [isMounted, setIsMounted] = useState(false);
+    const [isDesktop, setIsDesktop] = useState(false);
+
+    useEffect(() => {
+        // ensure that the component is mounted before setting state
+        setIsMounted(true); 
+
+        // check if the window width is greater than or equal to 768px
+        const handleResize = () => setIsDesktop(window.innerWidth >= 768);
+
+        // run on mount
+        handleResize();
+        // listen for resize events 
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    if (!isMounted) {
+        return null; 
+    }
 
     return (
         <div className="flex flex-col bg-background">
             <header className="bg-base-200 bg-background flex items-center justify-between p-4">
                 <div className="text-xl font-bold">AccessEDUK</div>
-                <nav className="navbar flex justify-center items-center w-full">
-                    <NavBar />
-                </nav>
+                {isDesktop && (
+                    <nav className="navbar flex justify-center items-center w-full">
+                        <FullNav />
+                    </nav>
+                )}
+
+                {!isDesktop && (
+                    <nav className="navbar flex justify-center items-center w-full">
+                        <HamburgerMenu />
+                    </nav>
+                )}
+                
             </header>
         </div>
     );

@@ -4,7 +4,8 @@ import Link from 'next/link';
 
 export default function FullNav() {
     return (
-        <div className="flex-1 flex justify-center space-x-8 mt-2 md:mt-0 bg-#1A1B41">
+        <div className="flex justify-center items-center w-full relative">
+            <div className="flex-1 flex justify-center space-x-8 mt-2 md:mt-0 max-w-screen-lg">
             <Link href="/" className="flex-1 text-center btn btn-ghost">
                 Home
             </Link>
@@ -20,9 +21,7 @@ export default function FullNav() {
             <Link href="/Account/SignUp" className="flex-1 text-center btn btn-ghost">
                 Sign Up
             </Link>
-            <Link href="/Account/" className="flex-1 text-center btn btn-ghost">
-                Styled Login
-            </Link>
+            </div>
         </div>
     );
 };
