@@ -114,6 +114,9 @@ export default function ExamplePage() {
                             </select>
                         </div>
                     </div>
+                    <Link className="text-link" href="/example-page/param">
+                        Go to example page with param
+                    </Link>
             </main>
             
             
