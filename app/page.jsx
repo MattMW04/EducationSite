@@ -1,8 +1,5 @@
-'use client';
 
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import React, { Suspense, useState, useEffect } from 'react';
+
 
 
 const HomePage = () => {
