@@ -19,10 +19,10 @@ const MobileMenu: React.FC<MobileMenuProps> = ({handleToggle}) => {
                     <Link href="/">Home</Link>
                 </li>
                 <li className="py-2">
-                    <Link href="/calendar/month">Monthly Calendar</Link>
+                    <Link href="/Account/Login">Login</Link>
                 </li>
                 <li className="py-2">
-                    <Link href="/calendar/week">Weekly Calendar</Link>
+                    <Link href="/Account/SignUp">Sign up</Link>
                 </li>
             </ul>
         </div>
