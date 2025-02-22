@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { Analytics } from '@vercel/analytics/next';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -36,6 +37,7 @@ export default function RootLayout({ children}: Readonly<{ children: React.React
           {/* Header with Navbar */}
           <Header />
           {children}
+          <Analytics />
           {/* Footer */}
           <Footer />
         </ClientSessionProvider>
