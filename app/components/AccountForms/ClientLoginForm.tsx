@@ -6,6 +6,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { toast} from 'react-toastify';
 import FormWrapper from '@/app/components/AccountForms/FormWrapper';
 import OAuthButtons from '@/app/components/AccountForms/OAuthButtons';
+import Link from 'next/link';
 
 const ClientLoginForm = () =>{
     const [username, setUsername] = useState("");
@@ -117,9 +118,10 @@ const ClientLoginForm = () =>{
 
                     <OAuthButtons/>
 
-                    <p className="text-sm text-center text-bodyText mt-4">
-                        Don&apos;t have an account? <a href="#" className="text-link hover:text-linkHover">Sign up here</a>
-                    </p>
+                    <div className="flex justify-center items-center mt-4">
+                        <p className="text-black text-center mr-2">Don&apos;t Have An Account?</p>
+                        <Link href="/Account/SignUp" className="text-link hover:text-linkHover text-center">Sign Up here</Link>
+                    </div>
                 </FormWrapper>
             </main>
         </div>

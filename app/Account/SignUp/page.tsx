@@ -1,10 +1,9 @@
 
-
-
 import FormWrapper from '@/app/components/AccountForms/FormWrapper';
 import OAuthButtons from '@/app/components/AccountForms/OAuthButtons';
 import AuthCheck from '@/app/components/AuthCheck';
 import SignUpForm from '@/app/components/AccountForms/SignUp/SignUpForm';
+import Link from 'next/link';
 
 export const metadata={
     title:"Sign Up",
@@ -12,8 +11,6 @@ export const metadata={
 };
 
 const SignUpPage = () => {
-
-
     return (
         <div className="bg-background min-h-screen flex items-start justify-center pt-24 p-4">
         <main className="flex justify-center items-start w-full ">
@@ -21,9 +18,10 @@ const SignUpPage = () => {
         <FormWrapper title="Sign Up">
             <SignUpForm/>
             <OAuthButtons />
-            <p className="text-sm text-center text-bodyText mt-4">
-                Already have an account? <a href="/login" className="text-link hover:text-linkHover">Login here</a>
-            </p>
+            <div className="flex justify-center items-center mt-4">
+                <p className="text-black text-center mr-2">Already Have An Account?</p>
+                <Link href="/Account/Login" className="text-link hover:text-linkHover text-center">Login here</Link>
+            </div>
         </FormWrapper>
         </AuthCheck>
     </main>
