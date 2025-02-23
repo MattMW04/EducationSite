@@ -20,7 +20,7 @@ export default function ExamplePage() {
   );
   
   const fetchData = async () => {
-    const response = await fetch('http://localhost:3000/api/ping');
+    const response = await fetch('/api/ping');
     const data = await response.json();
     return data;
   };
