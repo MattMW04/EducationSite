@@ -55,9 +55,17 @@ const ClientLoginForm = () =>{
 
     if (status === "loading") {
         return (
-            <div className="flex items-center justify-center min-h-screen">
-                <p className="text-gray-500">Checking authentication...</p>
+            <div className="bg-background min-h-screen flex items-start justify-center pt-24 p-4 w-full">
+                <main className="flex justify-center items-starts w-full ">
+                    <FormWrapper title="">
+                        <div className="flex flex-col items-center justify-center min-h-screen">
+                            <p className="text-gray-500 mb-4">Checking authentication...</p>
+                            <span className="loading loading-spinner text-info text-6xl"></span>
+                        </div>
+                    </FormWrapper>
+                </main>
             </div>
+            
         );
     }
 

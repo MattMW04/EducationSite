@@ -1,8 +1,6 @@
 'use client'; // 'use client'; directive is used to indicate that this file should be treated as a client-side component in Next.js. This is necessary for components that rely on client-side features such as hooks and state management ie using React.
 // Note - you cannot export metadata from these components with this directive 
 import Link from 'next/link'; // Link component is used to navigate between pages in Next.js without a full page reload.
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import React, { useState, useEffect } from 'react'; // React hooks are used to manage state and lifecycle methods in functional components. useState and useEffect are two of the most commonly used hooks in React.
 
 
