@@ -17,15 +17,15 @@ export default function HamburgerMenu() {
 
     return (
         <div className="navbar flex justify-center items-center w-full relative p-4">
-                {/* Mobile menu with lucide react icon */}
-                <button 
-                    onClick={handleToggle}>
-                    <Menu className="lg:hidden md:hidden fixed top-7 right-4"  size={50} />
-                </button>
+            {/* Mobile menu with lucide react icon */}
+            <button 
+                onClick={handleToggle}
+                className="absolute right-2 transition-colors duration-500 hover:bg-gray-200 rounded-full p-2">
+                <Menu className="lg:hidden md:hidden transition-colours duration-500 hover:text-blue-500" size={50} />
+            </button>
             {isOpen && (
-                <MobileMenu handleToggle={handleToggle} />
+            <MobileMenu handleToggle={handleToggle} />
             )}
-            
         </div>
     );
 };
