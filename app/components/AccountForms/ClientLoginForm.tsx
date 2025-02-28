@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from "next/navigation";
 import { useSession, signIn, signOut } from "next-auth/react";
+import {Session} from "next-auth";
 import { toast} from 'react-toastify';
 import FormWrapper from '@/app/components/AccountForms/FormWrapper';
 import OAuthButtons from '@/app/components/AccountForms/OAuthButtons';
@@ -75,7 +76,7 @@ const ClientLoginForm = () =>{
                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative w-full max-w-sm" role="alert">
                     <strong className="font-bold ml-4 mr-4">Error:</strong>
                     <span className="block sm:inline p-2">You are logged in as: {session.user.name}</span>
-                    <span className="block sm:inline">Role: {session.user.role}</span>
+                    <span className="block sm:inline">Role: {session.user?.role ?? "Not assigned"} </span>
                     <input type="button" onClick={handleLogout} className="btn text-white m-4 bg-red-500 rounded-md px-4 py-2 cursor-pointer hover:bg-red-600" value="Logout" />
                 </div>
             </div>

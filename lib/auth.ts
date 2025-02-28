@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
@@ -6,7 +6,7 @@ import connectDB from "@/server/connectDB.mjs";
 import User from "@/server/models/User.mjs";
 import bcrypt from "bcrypt";
 
-export const authOptions: NextAuthOptions = {
+export const authOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     providers: [
         CredentialsProvider({
@@ -55,7 +55,7 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, user }) {
             if (user) {
                 token.userName = user.name;
-                token.role = user.role;
+                token.role = user.role ?? "user";
             }
             return token;
         },
