@@ -24,6 +24,7 @@ export async function middleware(req){
         url.pathname = "/";
         return NextResponse.redirect(url);
     }
+    return NextResponse.next();
 }
 
 export const config = { matcher: ["/admin/:path*", "/example-page"] };

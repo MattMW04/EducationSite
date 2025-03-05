@@ -1,4 +1,4 @@
-import ClientLoginWrapper from "@/app/components/AccountForms/ClientLoginFormWrapper";
+
 import ClientLoginForm from "@/app/components/AccountForms/ClientLoginForm";
 
 export const metadata = {

@@ -8,7 +8,7 @@ import {Menu, X} from "lucide-react";
 
 // This component is a hamburger menu used for mobile screens
 
-export default function HamburgerMenu() {
+export default function HamburgerMenu({navLinks}) {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleToggle = () => {
@@ -24,7 +24,7 @@ export default function HamburgerMenu() {
                 <Menu className="lg:hidden md:hidden transition-colours duration-500 hover:text-blue-500" size={50} />
             </button>
             {isOpen && (
-            <MobileMenu handleToggle={handleToggle} />
+            <MobileMenu handleToggle={handleToggle} isOpen={isOpen} navLinks={navLinks} />
             )}
         </div>
     );

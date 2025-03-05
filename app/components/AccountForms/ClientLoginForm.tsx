@@ -3,11 +3,12 @@
 import React, { useState } from 'react';
 import { useRouter } from "next/navigation";
 import { useSession, signIn, signOut } from "next-auth/react";
-import {Session} from "next-auth";
 import { toast} from 'react-toastify';
 import FormWrapper from '@/app/components/AccountForms/FormWrapper';
 import OAuthButtons from '@/app/components/AccountForms/OAuthButtons';
 import Link from 'next/link';
+import { getSession } from 'next-auth/react';
+import handleLogin from '@/lib/handleLogin';
 
 const ClientLoginForm = () =>{
     const [username, setUsername] = useState("");
@@ -15,12 +16,14 @@ const ClientLoginForm = () =>{
     const router = useRouter();
     const { data: session, status } = useSession();
 
-    const handleLogin = async () => {
+    const HandleLogin = async () => {
         const response = await signIn("credentials", {
             username,
             password,
             redirect: false,
         });
+
+        console.log(response);
 
         if (response?.error) {
             toast.error(`Login failed: ${response.error}`, {
@@ -31,14 +34,21 @@ const ClientLoginForm = () =>{
                 draggable: true,
             });
         } else {
-            toast.success("Login successful!", {
+            toast.success(`Login successful!`, {
                 position: "top-right",
-                autoClose: 3000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 draggable: true,
             });
-            router.push("/");
+            
+            const updatedSession = await getSession();
+            if(updatedSession?.user?.role === "admin"){
+                router.push("/admin");
+            }else{
+                router.push("/");
+            }
+            
         }
     };
 
@@ -77,6 +87,7 @@ const ClientLoginForm = () =>{
                     <strong className="font-bold ml-4 mr-4">Error:</strong>
                     <span className="block sm:inline p-2">You are logged in as: {session.user.name}</span>
                     <span className="block sm:inline">Role: {session.user?.role ?? "Not assigned"} </span>
+                    <span className="block sm:inline">id: {session.user?.id ?? "Not assigned"} </span>
                     <input type="button" onClick={handleLogout} className="btn text-white m-4 bg-red-500 rounded-md px-4 py-2 cursor-pointer hover:bg-red-600" value="Logout" />
                 </div>
             </div>
@@ -121,7 +132,7 @@ const ClientLoginForm = () =>{
                         <input
                             type="button"
                             value="Login"
-                            onClick={handleLogin}
+                            onClick={ () => handleLogin(username, password, router)}
                             className="w-full bg-buttonPrimary text-buttonText py-3 rounded-md font-bold hover:bg-buttonHover mt-4 cursor-pointer"
                         />
                     </form>

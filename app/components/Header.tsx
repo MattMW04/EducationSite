@@ -3,10 +3,15 @@
 import FullNav from './Navbar/FullNav';
 import React, { useState, useEffect } from 'react';
 import HamburgerMenu from './Navbar/HamburgerMenu';
+import { useSession } from 'next-auth/react';
+import {getNavLinks} from '@/lib/getNavLinks';
 
 const Header = () => {
     const [isMounted, setIsMounted] = useState(false);
     const [isDesktop, setIsDesktop] = useState(false);
+
+    const {data: session} = useSession();
+    const navLinks = getNavLinks(session);
 
     useEffect(() => {
         // ensure that the component is mounted before setting state
@@ -33,13 +38,13 @@ const Header = () => {
                 <div className="text-xl font-bold">AccessEDUK</div>
                 {isDesktop && (
                     <nav className="navbar flex justify-center items-center w-full">
-                        <FullNav />
+                        <FullNav navLinks={navLinks} />
                     </nav>
                 )}
 
                 {!isDesktop && (
                     <nav className="navbar flex justify-center items-center w-full">
-                        <HamburgerMenu />
+                        <HamburgerMenu navLinks={navLinks} />
                     </nav>
                 )}
                 

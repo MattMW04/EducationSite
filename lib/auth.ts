@@ -1,4 +1,3 @@
-import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
@@ -54,6 +53,7 @@ export const authOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
+                token.id = user.id;
                 token.userName = user.name;
                 token.role = user.role ?? "user";
             }
@@ -62,6 +62,7 @@ export const authOptions = {
         async session({ session, token }) {
             if (token?.userName) {
                 session.user = {
+                    id: token.id as string,
                     name: token.userName as string,
                     role: token.role as string,
                 };
