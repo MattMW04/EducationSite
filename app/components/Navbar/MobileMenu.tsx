@@ -1,5 +1,7 @@
+"use client";
 import Link from 'next/link';
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import {X} from "lucide-react";
 import {signOut} from 'next-auth/react';
 
@@ -13,6 +15,7 @@ interface MobileMenuProps {
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({handleToggle, isOpen, navLinks}) => {
+    const pathname = usePathname();
     return (
         <div className={`fixed top-0 right-0 h-full w-64 bg-nav text-white p-4 z-50 transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-500 ease-in-out`}>
             <div className="absolute top-2 left-0 w-full flex justify-between items-center">
@@ -31,7 +34,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({handleToggle, isOpen, navLinks})
                             {link.label}
                         </button>
                     ):(
-                        <Link key={index} href={link.href} className= "flex-1 text-center btn btn-ghost">
+                        <Link key={index} href={link.href} className={`flex-1 text-center btn btn-ghost ${pathname === link.href ? 'border-b-2 border-white' : ''}`}>
                             {link.label}
                         </Link>
 
@@ -41,4 +44,4 @@ const MobileMenu: React.FC<MobileMenuProps> = ({handleToggle, isOpen, navLinks})
         </div>
     )
 }    
-export default MobileMenu     
+export default MobileMenu
