@@ -1,7 +1,10 @@
 "use client";
 import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react'; 
 
-export default function UserRoutesList({ userId }: { userId: string }) {
+export default function UserRoutesList() {
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
   const [routes, setRoutes] = useState([]);
 
   useEffect(() => {

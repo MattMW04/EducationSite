@@ -5,7 +5,7 @@ export function getNavLinks(session: Session | null) {
         ? [  // Links for authenticated users
             { href: "/", label: "Home" },
             { href: "/Dashboard", label: "Dashboard" },
-            { href: "/profile", label: "Profile" },
+            { href: "/Quizzes", label: "Quizzes" },
             { href: "/api/auth/signout", label: "Logout" }
         ]
         : [  

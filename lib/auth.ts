@@ -36,8 +36,6 @@ export const authOptions = {
                 }
 
                 return { id: user._id.toString(), name: user.username, email: user.email, role: user.role };
-
-                
             },
         }),
         GitHubProvider({
@@ -48,7 +46,6 @@ export const authOptions = {
             clientId: process.env.GOOGLE_OA_ID,
             clientSecret: process.env.GOOGLE_OA_SECRET,
         }),
-
     ],
     callbacks: {
         async jwt({ token, user }) {
@@ -70,5 +67,17 @@ export const authOptions = {
             return session;
         },
     },
+    cookies: {
+        sessionToken: {
+            name: "next-auth.session-token",
+            options: {
+                httpOnly: true,
+                sameSite: "lax",
+                secure: process.env.NODE_ENV === "production",
+                path : "/",
+            },
+        },
+    },
+
     debug: process.env.NODE_ENV === "development",
 };
