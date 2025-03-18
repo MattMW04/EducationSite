@@ -4,7 +4,16 @@ import QuizWrapper from "@/app/components/Quizzes/QuizWrapper";
 
 async function fetchQuizData(QuizName: string) {
     const cookieStore = await cookies();
-    const sessionToken = cookieStore.get('next-auth.session-token')?.value;
+
+    // first try and access the secure cookie - for deployment on Vercel
+    let sessionToken = cookieStore.get('__Secure-next-auth.session-token')?.value;
+
+    // if the secure cookie is not found, try the regular cookie - for local development
+    if (!sessionToken){
+        sessionToken = cookieStore.get('next-auth.session-token')?.value;
+    }
+    
+    
 
     // Additional logging
     console.log('Cookies:', cookieStore.getAll());
