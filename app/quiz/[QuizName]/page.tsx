@@ -7,10 +7,14 @@ async function fetchQuizData(QuizName: string) {
 
     // first try and access the secure cookie - for deployment on Vercel
     let sessionToken = cookieStore.get('__Secure-next-auth.session-token')?.value;
+    // set the cookie name to the secure cookie name
+    let cookieName = '__Secure-next-auth.session-token';
 
     // if the secure cookie is not found, try the regular cookie - for local development
     if (!sessionToken){
         sessionToken = cookieStore.get('next-auth.session-token')?.value;
+        // set the cookie name to the regular cookie name
+        cookieName = 'next-auth.session-token';
     }
     
     
@@ -18,6 +22,7 @@ async function fetchQuizData(QuizName: string) {
     // Additional logging
     console.log('Cookies:', cookieStore.getAll());
     console.log('Session token:', sessionToken);
+    console.log('Cookie name:', cookieName);
 
     if (!sessionToken) {
         throw new Error('Unauthorized: No session token found');
@@ -27,7 +32,7 @@ async function fetchQuizData(QuizName: string) {
     const url = `${baseurl}/quizzes/${QuizName}`;
     const headers = {
         'Authorization': `Bearer ${sessionToken}`,
-        Cookie: `next-auth.session-token=${sessionToken}`
+        Cookie: `${cookieName}=${sessionToken}`
     };
 
     // Log the request details
