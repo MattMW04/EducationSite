@@ -9,6 +9,8 @@ export async function GET(request: NextRequest,
 ){
     try {
         console.log('Request headers:', request.headers);
+
+        console.log("session check started ");
         const session = await getServerSession({ req: request, ...authOptions });
         console.log('Session:', session);
         if (!session) {
