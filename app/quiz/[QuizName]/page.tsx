@@ -6,6 +6,10 @@ async function fetchQuizData(QuizName: string) {
     const cookieStore = await cookies();
     const sessionToken = cookieStore.get('next-auth.session-token')?.value;
 
+    // Additional logging
+    console.log('Cookies:', cookieStore.getAll());
+    console.log('Session token:', sessionToken);
+
     if (!sessionToken) {
         throw new Error('Unauthorized: No session token found');
     }
