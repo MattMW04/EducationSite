@@ -6,11 +6,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": false,
     "skipLibCheck": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "noEmit": true,
     "incremental": true,
     "moduleResolution": "node",
@@ -25,28 +21,18 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@/components/*": [
-        "app/components/*"
-      ],
-      "@/lib/*": [
-        "lib/*"
-      ]
+      "@/*": ["./*"],
+      "@/components/*": ["app/components/*"],
+      "@/lib/*": ["lib/*"]
     },
     "allowJs": true
   },
   "include": [
     "next-env.d.ts",
+    "types/next-auth.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
   ],
-  "exclude": [
-    "node_modules",
-    "**/*.js",
-    "**/*.jsx",
-    "app/api/**/*.js"
-  ]
+  "exclude": ["node_modules", "**/*.js", "**/*.jsx", "app/api/**/*.js"]
 }

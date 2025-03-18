@@ -1,4 +1,5 @@
-import ClientLoginWrapper from "@/app/components/AccountForms/ClientLoginFormWrapper";
+
+import ClientLoginForm from "@/app/components/AccountForms/ClientLoginForm";
 
 export const metadata = {
     title: 'AccessEDUK : Login',
@@ -8,7 +9,8 @@ export const metadata = {
 
 const LoginPage = () => {
     return (
-        <ClientLoginWrapper/>
+        <ClientLoginForm/>
+        
     );
 };
 
