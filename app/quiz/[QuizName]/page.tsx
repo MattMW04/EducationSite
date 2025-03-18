@@ -15,15 +15,24 @@ async function fetchQuizData(QuizName: string) {
     }
 
     const baseurl = process.env.NEXT_PUBLIC_API_URL;
-    const response = await fetch(`${baseurl}/quizzes/${QuizName}`, {
-        headers: {
-            'Authorization': `Bearer ${sessionToken}`,
-            Cookie: `next-auth.session-token=${sessionToken}`
-        },
+    const url = `${baseurl}/quizzes/${QuizName}`;
+    const headers = {
+        'Authorization': `Bearer ${sessionToken}`,
+        Cookie: `next-auth.session-token=${sessionToken}`
+    };
+
+    // Log the request details
+    console.log('Fetching quiz data from:', url);
+    console.log('Request headers:', headers);
+
+    const response = await fetch(url, {
+        headers,
         credentials: 'include'
     });
 
     if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Fetch error response:', errorText);
         throw new Error('Failed to fetch quiz data: ' + response.statusText);
     }
 
