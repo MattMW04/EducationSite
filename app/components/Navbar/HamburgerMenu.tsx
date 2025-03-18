@@ -4,26 +4,27 @@ import { useState } from 'react';
 
 import MobileMenu from './MobileMenu';
 
+import {Menu, X} from "lucide-react";
+
 // This component is a hamburger menu used for mobile screens
 
-export default function HamburgerMenu() {
+export default function HamburgerMenu({navLinks}) {
     const [isOpen, setIsOpen] = useState(false);
 
-const handleToggle = () => {
-    console.log('clicked', isOpen);
-    setIsOpen(!isOpen);
-};
+    const handleToggle = () => {
+        setIsOpen(!isOpen);
+    };
 
     return (
         <div className="navbar flex justify-center items-center w-full relative p-4">
-            <div className="absolute right-5 flex-shrink-0">
-                <svg className="block h-8 w-8 text-blue-500 fill-current hover:outline hover:outline-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" onClick={() => { handleToggle(); }}>
-                    <title>Mobile menu</title>
-                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-                </svg>
-            </div>
+            {/* Mobile menu with lucide react icon */}
+            <button 
+                onClick={handleToggle}
+                className="absolute right-2 transition-colors duration-500 hover:bg-gray-200 rounded-full p-2">
+                <Menu className="lg:hidden md:hidden transition-colours duration-500 hover:text-blue-500" size={50} />
+            </button>
             {isOpen && (
-                <MobileMenu handleToggle={handleToggle} />
+            <MobileMenu handleToggle={handleToggle} isOpen={isOpen} navLinks={navLinks} />
             )}
         </div>
     );

@@ -1,4 +1,3 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
@@ -6,7 +5,7 @@ import connectDB from "@/server/connectDB.mjs";
 import User from "@/server/models/User.mjs";
 import bcrypt from "bcrypt";
 
-export const authOptions: NextAuthOptions = {
+export const authOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     providers: [
         CredentialsProvider({
@@ -37,8 +36,6 @@ export const authOptions: NextAuthOptions = {
                 }
 
                 return { id: user._id.toString(), name: user.username, email: user.email, role: user.role };
-
-                
             },
         }),
         GitHubProvider({
@@ -49,23 +46,38 @@ export const authOptions: NextAuthOptions = {
             clientId: process.env.GOOGLE_OA_ID,
             clientSecret: process.env.GOOGLE_OA_SECRET,
         }),
-
     ],
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
+                token.id = user.id;
                 token.userName = user.name;
+                token.role = user.role ?? "user";
             }
             return token;
         },
         async session({ session, token }) {
             if (token?.userName) {
                 session.user = {
+                    id: token.id as string,
                     name: token.userName as string,
+                    role: token.role as string,
                 };
             }
             return session;
         },
     },
+    cookies: {
+        sessionToken: {
+            name: "next-auth.session-token",
+            options: {
+                httpOnly: true,
+                sameSite: "lax",
+                secure: process.env.NODE_ENV === "production",
+                path : "/",
+            },
+        },
+    },
+
     debug: process.env.NODE_ENV === "development",
 };

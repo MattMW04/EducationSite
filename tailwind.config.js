@@ -28,6 +28,9 @@ module.exports = {
         buttonHover: "#005A9E",
         buttonSecondary: "#4CAF50",
         buttonText: "#FFFFFF",
+        header: "#191E24",
+        footer: "#191E24",
+        nav: "#191E24",
       }
       
     },
