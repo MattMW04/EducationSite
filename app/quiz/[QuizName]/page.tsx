@@ -25,20 +25,29 @@ async function fetchQuizData(QuizName: string) {
     console.log('Fetching quiz data from:', url);
     console.log('Request headers:', headers);
 
-    const response = await fetch(url, {
-        headers,
-        credentials: 'include'
-    });
+    try {
+        const response = await fetch(url, {
+            headers,
+            credentials: 'include'
+        });
 
-    if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Fetch error response:', errorText);
-        throw new Error('Failed to fetch quiz data: ' + response.statusText);
+        // Log the response status and headers
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Fetch error response:', errorText);
+            throw new Error('Failed to fetch quiz data: ' + response.statusText);
+        }
+
+        const quizData = await response.json();
+        console.log('Quiz data:', quizData); // Ensure this logs the correct structure
+        return quizData;
+    } catch (error) {
+        console.error('Error during fetch:', error);
+        throw error;
     }
-
-    const quizData = await response.json();
-    console.log('Quiz data:', quizData); // Ensure this logs the correct structure
-    return quizData;
 }
 
 export default async function QuizPage({ params }) {
