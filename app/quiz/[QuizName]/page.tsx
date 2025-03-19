@@ -1,5 +1,4 @@
 import { cookies } from "next/headers";
-import QuizTitle from "@/app/components/Quizzes/QuizTitle";
 import QuizWrapper from "@/app/components/Quizzes/QuizWrapper";
 
 async function fetchQuizData(QuizName: string) {
@@ -16,47 +15,28 @@ async function fetchQuizData(QuizName: string) {
         // set the cookie name to the regular cookie name
         cookieName = 'next-auth.session-token';
     }
-    
-    
-
-    // Additional logging
-    console.log('Cookies:', cookieStore.getAll());
-    console.log('Session token:', sessionToken);
-    console.log('Cookie name:', cookieName);
 
     if (!sessionToken) {
         throw new Error('Unauthorized: No session token found');
     }
-
     const baseurl = process.env.NEXT_PUBLIC_API_URL;
     const url = `${baseurl}/quizzes/${QuizName}`;
     const headers = {
         'Authorization': `Bearer ${sessionToken}`,
-        Cookie: `${cookieName}=${sessionToken}`
+        Cookie: `${cookieName}=${sessionToken}` 
     };
-
-    // Log the request details
-    console.log('Fetching quiz data from:', url);
-    console.log('Request headers:', headers);
-
     try {
         const response = await fetch(url, {
             headers,
             credentials: 'include'
         });
 
-        // Log the response status and headers
-        console.log('Response status:', response.status);
-        console.log('Response headers:', response.headers);
-
         if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Fetch error response:', errorText);
+            
             throw new Error('Failed to fetch quiz data: ' + response.statusText);
         }
 
         const quizData = await response.json();
-        console.log('Quiz data:', quizData); // Ensure this logs the correct structure
         return quizData;
     } catch (error) {
         console.error('Error during fetch:', error);
@@ -97,6 +77,6 @@ export default async function QuizPage({ params }) {
         );
     } catch (error) {
         console.error('Error fetching quiz:', error);
-        return <div>{error.message}</div>;
+        return <div className="min-h-screen flex items-center justify-center">{error.message}</div>;
     }
 }

@@ -19,26 +19,17 @@ interface QuizResultsProps {
   onReset: () => void;
 }
 
-/**
- * QuizResults component displays the results of a quiz taken by the user.
- *
- * @param {QuizResultsProps} props - The properties for the QuizResults component.
- * @param {Quiz} props.quiz - The quiz object containing questions and options.
- * @param {number[]} props.userAnswers - The array of user's selected answer indices.
- *
- * @returns {JSX.Element} The rendered component displaying the quiz results.
- *
- * The component calculates the user's score by comparing their answers to the correct answers.
- * It then displays the score and a detailed breakdown of each question, showing whether the user's
- * selected answer was correct or incorrect.
- */
 const QuizResults: React.FC<QuizResultsProps> = ({ quiz, userAnswers, onReset }) => {
-    // gets an array of correct answer indices for each question
-  const correctAnswers = quiz.questions.map(question => question.options.findIndex(option => option.isCorrect)); 
+  // gets an array of correct answer indexes for each question
+  const correctAnswers = quiz.questions.map(question =>
+    question.options
+      .map((option, i) => option.isCorrect ? i : -1)
+      .filter(i => i >= 0)
+  );
   // calculates the score by comparing the user's answers to the correct answers
-  const score = userAnswers.filter((answer, index) => answer === correctAnswers[index]).length;
-
-  
+  const score = userAnswers.filter(
+    (answer, index) => correctAnswers[index].includes(answer)
+  ).length;
 
   return (
     <div className="mt-8 p-4 border border-divider rounded bg-cardBackground">
@@ -51,14 +42,12 @@ const QuizResults: React.FC<QuizResultsProps> = ({ quiz, userAnswers, onReset })
             <div key={oIndex} className="flex items-center mb-2">
               <span className="mr-2">
                 {userAnswers[qIndex] === oIndex ? (
-                  option.isCorrect ? (
-                    <CheckCircle className="text-green-500" />
-                  ) : (
-                    <XCircle className="text-red-500" />
-                  )
+                  correctAnswers[qIndex].includes(oIndex)
+                    ? <CheckCircle className="text-green-500" />
+                    : <XCircle className="text-red-500" />
                 ) : null}
               </span>
-              <span className={option.isCorrect ? 'font-bold text-green-500' : 'font bold text-red-500'}>
+              <span className={correctAnswers[qIndex].includes(oIndex) ? 'font-bold text-green-500' : 'font bold text-red-500'}>
                 {option.optionText}
               </span>
             </div>

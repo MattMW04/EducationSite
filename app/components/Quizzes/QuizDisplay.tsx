@@ -20,12 +20,12 @@ interface QuizDisplayProps {
 const QuizDisplay: React.FC<QuizDisplayProps> = ({ quiz }) => {
   // Ensure quiz and quiz.questions are defined
   const questionsLength = quiz?.questions?.length || 0;
-  const [userAnswers, setUserAnswers] = useState<number[]>(Array(questionsLength).fill(-1));
+  const [userAnswers, setUserAnswers] = useState<number[]>(Array(questionsLength).fill(-1)); // initialize userAnswers array with -1 in each index to be replaced by option index of answer 
   const [showResults, setShowResults] = useState(false);
 
   const handleOptionChange = (qIndex: number, oIndex: number) => {
-    const newAnswers = [...userAnswers];
-    newAnswers[qIndex] = oIndex;
+    const newAnswers = [...userAnswers]; // copy userAnswers array
+    newAnswers[qIndex] = oIndex; // update option index (option chosen for answer_ for given question )
     setUserAnswers(newAnswers);
   };
 
@@ -37,11 +37,6 @@ const QuizDisplay: React.FC<QuizDisplayProps> = ({ quiz }) => {
     setUserAnswers(Array(questionsLength).fill(-1));
     setShowResults(false);
   };
-
-  console.log('quiz:', quiz);
-  console.log("title:", quiz.title);
-  console.log("description:", quiz.description);
-  console.log("difficulty:", quiz.difficulty);
 
   return (
     <div className="bg-background min-h-screen flex items-start justify-center p-2 mb-4  w-full">
