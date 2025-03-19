@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+
 const { Schema } = mongoose;
 
 const quizSchema = new Schema(
@@ -7,6 +8,7 @@ const quizSchema = new Schema(
         title: {
             type: String,
             required: true,
+            unique: true,
         },
         description: {
             type: String,
@@ -49,7 +51,7 @@ const quizSchema = new Schema(
     { timestamps: true }
 );
 
-quizSchema.index({ title: 1 });
+
 
 const Quiz = mongoose.models.Quiz || mongoose.model('Quiz', quizSchema);
 
