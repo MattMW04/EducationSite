@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import FormWrapper from '../AccountForms/FormWrapper';
 import { useSession } from 'next-auth/react';
+import QuizFormErrorMessage from './QuizFormErrorMessage';
 
 interface QuizData {
   title: string;
@@ -33,6 +34,8 @@ export default function AddQuizForm() {
     createdBy: '',
     private: false,
   });
+  const [error, setError] = useState<string>('');
+  const errorRef = useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (session?.user?.id) {
@@ -85,7 +88,32 @@ export default function AddQuizForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Example of sending data to an API route
+    // Validate required fields
+    if (!quiz.title.trim() || !quiz.description.trim() || !quiz.difficulty) {
+      setError('Please fill out all required fields.');
+      setTimeout(() => {
+        errorRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 0);
+      return;
+    }
+    for (const question of quiz.questions) {
+      if (!question.questionText.trim()) {
+        setError('Each question must have text.');
+        setTimeout(() => {
+          errorRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }, 0);
+        return;
+      }
+      if (!question.options.some((opt) => opt.isCorrect)) {
+        setError('Each question must have at least one correct option.');
+        setTimeout(() => {
+          errorRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }, 0);
+        return;
+      }
+    }
+    setError('');
+    
     const quizData= {
         title: quiz.title,
         description: quiz.description,
@@ -117,6 +145,7 @@ export default function AddQuizForm() {
       <main className="flex justify-center items-start w-full">
         <FormWrapper title="Create Quiz">
           <form onSubmit={handleSubmit} className="space-y-4">
+            {error && <QuizFormErrorMessage error={error} errorRef={errorRef} />}
             <div>
               <label className="block text-bodyText font-medium mb-1">Title:</label>
               <input
@@ -125,7 +154,6 @@ export default function AddQuizForm() {
                 value={quiz.title}
                 onChange={handleChange}
                 className="w-full p-3 border border-divider rounded-md bg-white focus:ring-2 focus:ring-primary focus:outline-none text-black"
-                required
               />
             </div>
 
