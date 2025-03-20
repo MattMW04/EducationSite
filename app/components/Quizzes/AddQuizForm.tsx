@@ -3,6 +3,8 @@ import React, { useState, useRef } from 'react';
 import FormWrapper from '../AccountForms/FormWrapper';
 import { useSession } from 'next-auth/react';
 import QuizFormErrorMessage from './QuizFormErrorMessage';
+import QuizFormSuccessMessage from './QuizFormSuccessMessage'; // Import success message component
+import { set } from 'mongoose';
 
 interface QuizData {
   title: string;
@@ -35,13 +37,27 @@ export default function AddQuizForm() {
     private: false,
   });
   const [error, setError] = useState<string>('');
+  const [success, setSuccess] = useState<string>(''); // Add success state
   const errorRef = useRef<HTMLDivElement>(null);
+  const successRef = useRef<HTMLDivElement>(null); // Add success ref
 
   React.useEffect(() => {
     if (session?.user?.id) {
       setQuiz((prev) => ({ ...prev, createdBy: session.user.id }));
     }
   }, [session]);
+
+  React.useEffect(() => {
+    if (error) {
+      errorRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [error]);
+
+  React.useEffect(() => {
+    if (success) {
+      successRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [success]);
 
   const addQuestion = () => {
     setQuiz({
@@ -56,6 +72,12 @@ export default function AddQuizForm() {
   const addOption = (qIndex: number) => {
     const updatedQuestions = [...quiz.questions];
     updatedQuestions[qIndex].options.push({ optionText: '', isCorrect: false });
+    setQuiz({ ...quiz, questions: updatedQuestions });
+  };
+
+  const deleteOption = (qIndex: number, oIndex: number) => {
+    const updatedQuestions = [...quiz.questions];
+    updatedQuestions[qIndex].options.splice(oIndex, 1);
     setQuiz({ ...quiz, questions: updatedQuestions });
   };
 
@@ -91,43 +113,39 @@ export default function AddQuizForm() {
     // Validate required fields
     if (!quiz.title.trim() || !quiz.description.trim() || !quiz.difficulty) {
       setError('Please fill out all required fields.');
-      setTimeout(() => {
-        errorRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 0);
+      setSuccess(''); // Clear success message
       return;
     }
     for (const question of quiz.questions) {
       if (!question.questionText.trim()) {
         setError('Each question must have text.');
-        setTimeout(() => {
-          errorRef.current?.scrollIntoView({ behavior: 'smooth' });
-        }, 0);
+        setSuccess(''); // Clear success message
         return;
       }
       if (!question.options.some((opt) => opt.isCorrect)) {
         setError('Each question must have at least one correct option.');
-        setTimeout(() => {
-          errorRef.current?.scrollIntoView({ behavior: 'smooth' });
-        }, 0);
+        setSuccess(''); // Clear success message
         return;
       }
     }
     setError('');
-    
-    const quizData= {
-        title: quiz.title,
-        description: quiz.description,
-        difficulty: quiz.difficulty,
-        questions: quiz.questions.map((question) => ({
-            questionText: question.questionText,
-            options: question.options.map((option) => ({
-            optionText: option.optionText,
-            isCorrect: option.isCorrect,
-            })),
+    setSuccess(''); // Reset success message
+
+    const quizData = {
+      title: quiz.title,
+      description: quiz.description,
+      difficulty: quiz.difficulty,
+      questions: quiz.questions.map((question) => ({
+        questionText: question.questionText,
+        options: question.options.map((option) => ({
+          optionText: option.optionText,
+          isCorrect: option.isCorrect,
         })),
-        createdBy : quiz.createdBy,
-        private: quiz.private
-    }
+      })),
+      createdBy: quiz.createdBy, 
+      private: quiz.private
+    };
+
     try {
       const response = await fetch('/api/quizzes', {
         method: 'POST',
@@ -135,6 +153,15 @@ export default function AddQuizForm() {
         body: JSON.stringify(quizData),
       });
       console.log('Quiz creation response:', await response.json());
+      setSuccess('Quiz created successfully!'); // Set success message
+      setQuiz({
+        title: '',  
+        description: '',
+        difficulty: 'Easy',
+        questions: [{ questionText: '', options: [{ optionText: '', isCorrect: false }] }],
+        createdBy: session?.user?.id ,
+        private: false,
+      });
     } catch (error) {
       console.error('Error creating quiz:', error);
     }
@@ -146,6 +173,7 @@ export default function AddQuizForm() {
         <FormWrapper title="Create Quiz">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && <QuizFormErrorMessage error={error} errorRef={errorRef} />}
+            {success && <QuizFormSuccessMessage success={success} successRef={successRef} />}
             <div>
               <label className="block text-bodyText font-medium mb-1">Title:</label>
               <input
@@ -164,7 +192,7 @@ export default function AddQuizForm() {
                 name="description"
                 value={quiz.description}
                 onChange={handleChange}
-                className="w-full p-3 border  border-divider rounded-md bg-white focus:ring-2 focus:ring-primary focus:outline-none text-black"
+                className="w-full p-3 border border-divider rounded-md bg-white focus:ring-2 focus:ring-primary focus:outline-none text-black"
               />
             </div>
 
@@ -233,6 +261,13 @@ export default function AddQuizForm() {
                         />
                         <span className="text-bodyText">Correct</span>
                       </label>
+                      <button
+                        type="button"
+                        className="py-1 px-3 bg-red-500 text-white rounded ml-2"
+                        onClick={() => deleteOption(qIndex, oIndex)}
+                      >
+                        Delete
+                      </button>
                     </div>
                   ))}
                   <button
