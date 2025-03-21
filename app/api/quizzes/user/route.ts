@@ -7,12 +7,16 @@ import { authOptions } from '@/lib/auth';
 export async function GET(request: NextRequest) {
     const session = await getServerSession(authOptions);
     const id = session?.user?.id;
-    console.log('username:', id);
+    
 
     await connectDB();
-    console.log('Connected to DB');
+    
     const userQuizzes = await Quiz.find({ createdBy: id });
-    console.log('User quizzes:', userQuizzes);
+
+    if (!userQuizzes || userQuizzes.length === 0) {
+        return NextResponse.json({ message: 'No quizzes found' }, { status: 404 });
+    }
+    
 
     return NextResponse.json(userQuizzes, { status: 200 });
 }

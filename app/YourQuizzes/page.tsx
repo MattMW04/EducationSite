@@ -1,11 +1,11 @@
-import UserRoutesList from '../components/UserRoutesList';
+import UserQuizList from '@/components/QuizLists/UserQuizList';
 
 
 export default function AUserRoutesPage() {
   
   return (
     <main>
-      <UserRoutesList  />
+      <UserQuizList  />
     </main>
   );
 }
