@@ -1,14 +1,16 @@
-export const getUserLinks = async (): Promise<[] | string> => {
+
+export const getUserLinks = async (): Promise<[] | []> => {
     try {
         const response = await fetch('/api/quizzes/user');
         const data = await response.json();
         if (!response.ok) {
-            throw new Error(data.message || 'Failed to fetch User quizzes');
+            console.log(data.message)
+            return [];
         }
 
         if(data.length === 0) {
             console.log('No public quizzes found');
-            return `${data.message}`;
+            return [];
         }
         return data;
     } catch (error) {
