@@ -153,7 +153,14 @@ export default function AddQuizForm() {
         body: JSON.stringify(quizData),
       });
       console.log('Quiz creation response:', await response.json());
+
+      if (!response.ok) {
+        setError('Failed to create quiz. Please try again.');
+        setSuccess(''); // Clear success message
+        return;
+      }
       setSuccess('Quiz created successfully!'); // Set success message
+      setError(''); // Clear error message
       setQuiz({
         title: '',  
         description: '',

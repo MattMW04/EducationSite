@@ -2,7 +2,7 @@ import { signIn, getSession } from "next-auth/react";
 import { toast } from "react-toastify"; 
 
 
-async function handleLogin(username, password, router){
+async function handleLogin(username, password, router, setError){
     const response = await signIn("credentials", {
         username,
         password,
@@ -12,13 +12,7 @@ async function handleLogin(username, password, router){
     console.log(response);
 
     if (response?.error) {
-        toast.error(`Login failed: ${response.error}`, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            draggable: true,
-        });
+        setError(response.error);
     } else {
         toast.success(`Login successful!`, {
             position: "top-right",
