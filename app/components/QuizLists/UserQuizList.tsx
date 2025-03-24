@@ -42,10 +42,10 @@ export default function UserQuizList() {
       text="Take a look at the quizzes you have created."
     />
     <div
-      className={`flex-grow flex items-center justify-center`}
+      className={` flex items-center justify-center `}
     >
       {quizzes.length === 0 ? (
-        <div className="text-center p-4 flex flex-col items-center justify-center min-h-[200px] min-w-[400px] md:min-h-[400px] md:min-w-[600px]">
+        <div className="text-center p-4 flex flex-col items-center justify-start min-h-[200px] min-w-[400px] md:min-h-[400px] md:min-w-[600px] mt-4">
           <h1 className="text-2xl font-bold mb-4 text-headerText break-words">No quizzes found</h1>
           <p className="text-bodyText break-words">Please navigate via the navigation bar to create a quiz to view.</p>
         </div>
