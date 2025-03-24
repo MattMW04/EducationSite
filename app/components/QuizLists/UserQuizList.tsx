@@ -61,8 +61,15 @@ export default function UserQuizList() {
               <h2 className="text-xl font-bold mb-2 text-headerText break-words">{quiz.title}</h2>
               <p className="mb-2 text-bodyText break-words">{quiz.description}</p>
               <p className="mb-2 text-bodyText break-words">Difficulty: {quiz.difficulty}</p>
-              {quiz.private ? <p className="mb-2 text-bodyText font-bold break-words">Private Quiz - Viewable only by you</p> : <p className="mb-2 text-bodyText break-words">Public Quiz</p>}
+              {quiz.private ? <p className="mb-2 text-bodyText font-bold break-words"> Privacy: Private Quiz - Viewable only by you</p> : <p className="mb-2 text-bodyText break-words"> Privacy: Public Quiz</p>}
               
+              <Link
+                href={`/editQuiz/${quiz.title}`}
+                className="inline-block px-4 py-2 bg-buttonSecondary text-white rounded hover:bg-buttonSecondaryHover transition-all break-words mr-4"
+              >
+                Edit Quiz
+              </Link>
+
               <Link
                 href={`/quiz/${quiz.title}`}
                 className="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-buttonHover transition-all break-words"
