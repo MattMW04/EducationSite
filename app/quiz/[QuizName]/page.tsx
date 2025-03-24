@@ -31,8 +31,11 @@ async function fetchQuizData(QuizName: string) {
             credentials: 'include'
         });
 
+        if(response.status === 403){
+            // Handle unauthorized access   
+            throw new Error('Unauthorized: You are not allowed to attempt or view this quiz as you are not the creator and it is a private quiz');
+        }
         if (!response.ok) {
-            
             throw new Error('Failed to fetch quiz data: ' + response.statusText);
         }
 
@@ -77,6 +80,6 @@ export default async function QuizPage({ params }) {
         );
     } catch (error) {
         console.error('Error fetching quiz:', error);
-        return <div className="min-h-screen flex items-center justify-center">{error.message}</div>;
+        return <div className="min-h-screen flex items-center justify-center text-bodyText">{error.message}</div>;
     }
 }
