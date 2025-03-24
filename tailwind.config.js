@@ -27,6 +27,7 @@ module.exports = {
         buttonPrimary: "#0077C8",
         buttonHover: "#005A9E",
         buttonSecondary: "#4CAF50",
+        buttonSecondaryHover: "#388E3C",
         buttonText: "#FFFFFF",
         header: "#191E24",
         footer: "#191E24",

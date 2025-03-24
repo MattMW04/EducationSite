@@ -1,5 +1,13 @@
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import EditQuizForm from '@/app/components/Quizzes/EditQuizForm';
+import { useSession } from 'next-auth/react';
 import { cookies } from "next/headers";
-import QuizWrapper from "@/app/components/Quizzes/QuizWrapper";
+
+export const metadata = {
+    title: 'AccessEDUK : Edit Quiz',
+    description: 'Edit an existing quiz',
+};
 
 async function fetchQuizData(QuizName: string) {
     const cookieStore = await cookies();
@@ -31,11 +39,13 @@ async function fetchQuizData(QuizName: string) {
             credentials: 'include'
         });
 
-        if(response.status === 403){
-            // Handle unauthorized access   
-            throw new Error('Unauthorized: You are not allowed to attempt or view this quiz as you are not the creator and it is a private quiz');
+        if (response.status === 403) {
+            // Handle unauthorized access
+            throw new Error('Unauthorized: You are not allowed to edit this quiz as you are not the creator');
         }
+
         if (!response.ok) {
+            
             throw new Error('Failed to fetch quiz data: ' + response.statusText);
         }
 
@@ -47,11 +57,10 @@ async function fetchQuizData(QuizName: string) {
     }
 }
 
-export default async function QuizPage({ params }) {
-    const { QuizName } = await params;
-
+export default async function EditQuizPage( { params } ) {
+    const { name } =  await params;
     try {
-        const quizData = await fetchQuizData(QuizName);
+        const quizData = await fetchQuizData(name);
 
         // Check if quiz data is available
         if (!quizData || !quizData.data || quizData.data.length === 0) {
@@ -60,22 +69,16 @@ export default async function QuizPage({ params }) {
             </div>;
         }
 
-        // Access the first element of the quizData.data array - enables us to access the quiz object
+        // Access the first element of the quizData.data array - enables access the quiz object
         const quiz = quizData.data[0];
-
-        // Log the quiz data to verify structure
-        console.log('Rendering Quiz with data:', quiz);
 
         // Correctly access the properties from the quiz object
         const { title, description, quizName } = quiz;
 
-        console.log("title", title);
-        console.log("description", description);
-        console.log("quizName", quizName);
-
+    
         return (
             <main className="min-h-screen flex items-center justify-center">
-                <QuizWrapper quiz={quiz} />
+                <EditQuizForm initialQuizData={quiz} />
             </main>
         );
     } catch (error) {

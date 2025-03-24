@@ -1,56 +1,29 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from "next/navigation";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { toast} from 'react-toastify';
 import FormWrapper from '@/app/components/AccountForms/FormWrapper';
-import OAuthButtons from '@/app/components/AccountForms/OAuthButtons';
+import  LoginFormError  from '@/app/components/AccountForms/LoginFormError';
 import Link from 'next/link';
-import { getSession } from 'next-auth/react';
 import handleLogin from '@/lib/handleLogin';
+
 
 const ClientLoginForm = () =>{
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const errorRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
     const { data: session, status } = useSession();
 
-    const HandleLogin = async () => {
-        const response = await signIn("credentials", {
-            username,
-            password,
-            redirect: false,
-        });
-
-        console.log(response);
-
-        if (response?.error) {
-            toast.error(`Login failed: ${response.error}`, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                draggable: true,
-            });
-        } else {
-            toast.success(`Login successful!`, {
-                position: "top-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                draggable: true,
-            });
-            
-            const updatedSession = await getSession();
-            if(updatedSession?.user?.role === "admin"){
-                router.push("/admin");
-            }else{
-                router.push("/");
-            }
-            
+    useEffect(() => {
+        if (error) {
+            errorRef.current?.scrollIntoView({ behavior: 'smooth' });
         }
-    };
+    }, [error]);
+
 
     const handleLogout = async () => {
         await signOut();
@@ -98,6 +71,7 @@ const ClientLoginForm = () =>{
         <div className="bg-background min-h-screen flex items-start justify-center pt-24 p-4 w-full">
             <main className="flex justify-center items-starts w-full ">
                 <FormWrapper title="Login">
+                {error && <LoginFormError error={error}  />}
                     <form className="space-y-4">
                         <div>
                             <label className="block text-bodyText font-medium mb-1">
@@ -132,12 +106,10 @@ const ClientLoginForm = () =>{
                         <input
                             type="button"
                             value="Login"
-                            onClick={ () => handleLogin(username, password, router)}
+                            onClick={ () => handleLogin(username, password, router, setError)}
                             className="w-full bg-buttonPrimary text-buttonText py-3 rounded-md font-bold hover:bg-buttonHover mt-4 cursor-pointer"
                         />
                     </form>
-
-                    <OAuthButtons/>
 
                     <div className="flex justify-center items-center mt-4">
                         <p className="text-black text-center mr-2">Don&apos;t Have An Account?</p>

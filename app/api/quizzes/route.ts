@@ -4,11 +4,19 @@ import Quiz from '@/server/models/Quiz.mjs';
 
 export async function POST(request: Request) {
   try {
-    const data = await request.json();
-    console.log('Incoming quiz data:', data);
+    const { title, description, difficulty, questions, createdBy, private: isPrivate } = await request.json();
+    console.log('Incoming quiz data:', { title, description, difficulty, questions, createdBy, isPrivate });
     await connectDB();
+
+    
+
     const createdQuiz = await Quiz.create({
-      ...data
+      title,
+      description,
+      difficulty,
+      questions,
+      createdBy: createdBy,
+      private: isPrivate,
     });
     return NextResponse.json({ message: 'Quiz created', quiz: createdQuiz }, { status: 201 });
   } catch (error) {

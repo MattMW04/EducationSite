@@ -1,6 +1,6 @@
 
 import FormWrapper from '@/app/components/AccountForms/FormWrapper';
-import OAuthButtons from '@/app/components/AccountForms/OAuthButtons';
+
 import AuthCheck from '@/app/components/AuthCheck';
 import SignUpForm from '@/app/components/AccountForms/SignUp/SignUpForm';
 import Link from 'next/link';
@@ -17,7 +17,6 @@ const SignUpPage = () => {
         <AuthCheck >
         <FormWrapper title="Sign Up">
             <SignUpForm/>
-            <OAuthButtons />
             <div className="flex justify-center items-center mt-4">
                 <p className="text-black text-center mr-2">Already Have An Account?</p>
                 <Link href="/Account/Login" className="text-link hover:text-linkHover text-center">Login here</Link>
