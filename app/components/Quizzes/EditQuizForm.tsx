@@ -1,10 +1,9 @@
 "use client";
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import FormWrapper from '../AccountForms/FormWrapper';
 import { useSession } from 'next-auth/react';
 import QuizFormErrorMessage from './QuizFormErrorMessage';
-import QuizFormSuccessMessage from './QuizFormSuccessMessage'; // Import success message component
-import { set } from 'mongoose';
+import QuizFormSuccessMessage from './QuizFormSuccessMessage';
 
 interface QuizData {
   title: string;
@@ -21,39 +20,25 @@ interface QuizData {
   private: boolean;
 }
 
-export default function AddQuizForm() {
+interface EditQuizFormProps {
+  initialQuizData: QuizData;
+}
+
+export default function EditQuizForm({ initialQuizData }: EditQuizFormProps) {
   const { data: session } = useSession();
-  const [quiz, setQuiz] = useState<QuizData>({
-    title: '',
-    description: '',
-    difficulty: 'Easy',
-    questions: [
-      {
-        questionText: '',
-        options: [{ optionText: '', isCorrect: false }],
-      },
-    ],
-    createdBy: '',
-    private: false,
-  });
+  const [quiz, setQuiz] = useState<QuizData>(initialQuizData);
   const [error, setError] = useState<string>('');
-  const [success, setSuccess] = useState<string>(''); // Add success state
+  const [success, setSuccess] = useState<string>('');
   const errorRef = useRef<HTMLDivElement>(null);
-  const successRef = useRef<HTMLDivElement>(null); // Add success ref
+  const successRef = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
-    if (session?.user?.id) {
-      setQuiz((prev) => ({ ...prev, createdBy: session.user.id }));
-    }
-  }, [session]);
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (error) {
       errorRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [error]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (success) {
       successRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
@@ -113,23 +98,23 @@ export default function AddQuizForm() {
     // Validate required fields
     if (!quiz.title.trim() || !quiz.description.trim() || !quiz.difficulty) {
       setError('Please fill out all required fields.');
-      setSuccess(''); // Clear success message
+      setSuccess('');
       return;
     }
     for (const question of quiz.questions) {
       if (!question.questionText.trim()) {
         setError('Each question must have text.');
-        setSuccess(''); // Clear success message
+        setSuccess('');
         return;
       }
       if (!question.options.some((opt) => opt.isCorrect)) {
         setError('Each question must have at least one correct option.');
-        setSuccess(''); // Clear success message
+        setSuccess('');
         return;
       }
     }
     setError('');
-    setSuccess(''); // Reset success message
+    setSuccess('');
 
     const quizData = {
       title: quiz.title,
@@ -142,42 +127,36 @@ export default function AddQuizForm() {
           isCorrect: option.isCorrect,
         })),
       })),
-      createdBy: quiz.createdBy, 
-      private: quiz.private
+      createdBy: quiz.createdBy,
+      private: quiz.private,
     };
 
     try {
-      const response = await fetch('/api/quizzes', {
-        method: 'POST',
+      const response = await fetch(`/api/quizzes/${quiz.title}`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(quizData),
       });
-      console.log('Quiz creation response:', await response.json());
+      console.log('Quiz update response:', await response.json());
 
       if (!response.ok) {
-        setError('Failed to create quiz. Please try again.');
-        setSuccess(''); // Clear success message
+        setError('Failed to update quiz. Please try again.');
+        setSuccess('');
         return;
       }
-      setSuccess('Quiz created successfully!'); // Set success message
-      setError(''); // Clear error message
-      setQuiz({
-        title: '',  
-        description: '',
-        difficulty: 'Easy',
-        questions: [{ questionText: '', options: [{ optionText: '', isCorrect: false }] }],
-        createdBy: session?.user?.id ,
-        private: false,
-      });
+      setSuccess('Quiz updated successfully!');
+      setError('');
     } catch (error) {
-      console.error('Error creating quiz:', error);
+      console.error('Error updating quiz:', error);
+      setError('Failed to update quiz. Please try again.');
+      setSuccess('');
     }
   };
 
   return (
     <div className="bg-background min-h-screen flex items-start justify-center pt-24 p-4 w-full">
       <main className="flex justify-center items-start w-full">
-        <FormWrapper title="Create Quiz">
+        <FormWrapper title="Edit Quiz">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && <QuizFormErrorMessage error={error} errorRef={errorRef} />}
             {success && <QuizFormSuccessMessage success={success} successRef={successRef} />}
@@ -189,6 +168,7 @@ export default function AddQuizForm() {
                 value={quiz.title}
                 onChange={handleChange}
                 className="w-full p-3 border border-divider rounded-md bg-white focus:ring-2 focus:ring-primary focus:outline-none text-black"
+                disabled
               />
             </div>
 
@@ -299,7 +279,7 @@ export default function AddQuizForm() {
               type="submit"
               className="w-full bg-buttonPrimary text-buttonText py-3 rounded-md font-bold hover:bg-buttonHover mt-4 cursor-pointer"
             >
-              Create Quiz
+              Update Quiz
             </button>
           </form>
         </FormWrapper>

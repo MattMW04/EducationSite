@@ -8,27 +8,70 @@ export async function GET(request: NextRequest,
 { params }:{ params : Promise<{ name: String}>}
 ){
     try {
-        console.log('Request headers:', request.headers);
 
         console.log("session check started ");
         const session = await getServerSession({ req: request, ...authOptions });
-        console.log('Session:', session);
         if (!session) {
             console.error('No session found');
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
         const { name } = await params;
-        console.log(`GET request to /api/quizzes/[${name}]`);
 
         await connectDB();
-        console.log('Connected to DB');
+        
         const quiz = await Quiz.find({ title: name });
-        console.log('Quiz:', quiz);
+        
+        if (!quiz || quiz.length === 0) {
+            return NextResponse.json({ message: "Quiz not found" }, { status: 404 });
+        }
+
+        if(quiz[0].createdBy.toString() !== session.user.id){
+            console.log(quiz[0].createdBy.toString());
+            console.log(session.user.id);
+            return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
+        }
 
         return NextResponse.json({ data: quiz, message: "success" }, { status: 200 });
     } catch (error) {
         console.error('Error in GET /api/quizzes/[name]:', error);
         return NextResponse.json({ message: "Internal Server Error: " + error  }, { status: 500 });
+    }
+}
+
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ name: string }> }) {
+    try {
+        console.log("session check started ");
+        const session = await getServerSession({ req: request, ...authOptions });
+        if (!session) {
+            console.error('No session found');
+            return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+        }
+
+        const { name } = await params;
+        const body = await request.json();
+
+        await connectDB();
+
+        const quiz = await Quiz.findOne({ title: name });
+
+        if (!quiz) {
+            return NextResponse.json({ message: "Quiz not found" }, { status: 404 });
+        }
+
+        if (quiz.createdBy.toString() !== session.user.id) {
+            return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
+        }
+
+        const updateResult = await Quiz.updateOne({ title: name }, { $set: body });
+
+        if (updateResult.modifiedCount === 0) {
+            return NextResponse.json({ message: "No changes made to the quiz" }, { status: 200 });
+        }
+
+        return NextResponse.json({ message: "Quiz updated successfully" }, { status: 200 });
+    } catch (error) {
+        console.error('Error in PUT /api/quizzes/[name]:', error);
+        return NextResponse.json({ message: "Internal Server Error: " + error }, { status: 500 });
     }
 }
