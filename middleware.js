@@ -15,17 +15,38 @@ export async function middleware(req){
     const { pathname } = req.nextUrl;
 
     // if user is not logged in and is not on the login page - redirect to login
-    if(!token){
+    if (!token && !pathname.startsWith("/Account/Login") && !pathname.startsWith("/Account/SignUp")) {
         return NextResponse.redirect(new URL("/Account/Login", req.nextUrl.origin));
-    };
+    }
+
     // uif user is on admin page and not an admin - redirect to /
     if (pathname.startsWith("/admin") && token.role !== "admin") {
         const url = req.nextUrl.clone();
         url.pathname = "/";
         return NextResponse.redirect(url);
     }
+
+    // if user is logged in and trys to direct to login or signup - redirect to /
+    if (pathname.startsWith("/Account/Login") || pathname.startsWith("/Account/SignUp")) {
+        if(token){
+            const url = req.nextUrl.clone();
+            url.pathname = "/";
+            return NextResponse.redirect(url);
+        }
+    }
+
     return NextResponse.next();
 }
 
-export const config = { matcher: ["/admin/:path*", "/example-page"] };
+export const config = { 
+    matcher: [
+        "/admin/:path*", 
+        "/YourQuizzes/:path*", 
+        "/Quizzes/:path*", 
+        "/quiz/:path*", 
+        "/editQuiz/:path*", 
+        "/Dashboard/:path*",
+        "/Account/:path*",
+    ] 
+};
 
