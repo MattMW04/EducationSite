@@ -26,7 +26,8 @@ export async function GET(request: NextRequest,
             return NextResponse.json({ message: "Quiz not found" }, { status: 404 });
         }
 
-        if(quiz[0].createdBy.toString() !== session.user.id){
+        if( quiz[0].private && quiz[0].createdBy.toString() !== session.user.id){
+            console.log(quiz[0].private);
             console.log(quiz[0].createdBy.toString());
             console.log(session.user.id);
             return NextResponse.json({ message: "Unauthorized" }, { status: 403 });

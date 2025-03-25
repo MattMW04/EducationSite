@@ -144,7 +144,7 @@ export default function EditQuizForm({ initialQuizData }: EditQuizFormProps) {
         setSuccess('');
         return;
       }
-      setSuccess('Quiz updated successfully!');
+      setSuccess('Quiz updated successfully! You can now safely leave this page.');
       setError('');
     } catch (error) {
       console.error('Error updating quiz:', error);
