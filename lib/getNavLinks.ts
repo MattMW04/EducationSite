@@ -3,7 +3,7 @@ import { Session } from "next-auth";
 export function getNavLinks(session: Session | null) {
     return session?.user
         ? [  // Links for authenticated users
-            { href: "/", label: "Home" },
+            { href: "/Dashboard", label: "Dashboard" },
             { href: "/createQuiz", label: "Create Quiz" },
             { href: "/Quizzes", label: "Quizzes" },
             { href: "/YourQuizzes", label: "Your Quizzes" },
