@@ -144,7 +144,7 @@ export default function EditQuizForm({ initialQuizData }: EditQuizFormProps) {
         setSuccess('');
         return;
       }
-      setSuccess('Quiz updated successfully!');
+      setSuccess('Quiz updated successfully! You can now safely leave this page.');
       setError('');
     } catch (error) {
       console.error('Error updating quiz:', error);
@@ -198,14 +198,15 @@ export default function EditQuizForm({ initialQuizData }: EditQuizFormProps) {
             </div>
 
             <div className="flex items-center mt-4">
+            <label className="text-bodyText ml-2 mr-2">Private ?</label>
               <input
                 type="checkbox"
                 name="private"
                 checked={quiz.private}
                 onChange={(e) => setQuiz({ ...quiz, private: e.target.checked })}
-                className="bg-cardBackground border border-divider rounded"
+                className="appearance-none w-4 h-4 mr-4 border-2 border-gray-300 relative checked:bg-buttonSecondary checked:border-buttonSecondary transition-all bg-cardBackground "
               />
-              <label className="text-bodyText ml-2">Private</label>
+              
             </div>
 
             {/* Questions Section */}
@@ -244,9 +245,9 @@ export default function EditQuizForm({ initialQuizData }: EditQuizFormProps) {
                           type="checkbox"
                           checked={option.isCorrect}
                           onChange={(e) => handleOptionChange(e, qIndex, oIndex)}
-                          className="bg-cardBackground border border-divider rounded"
+                          className="appearance-none w-4 h-4 border-2 border-gray-300  relative checked:bg-buttonSecondary checked:border-buttonSecondary transition-all"
                         />
-                        <span className="text-bodyText">Correct</span>
+                        <span className="text-bodyText">Correct ?</span>
                       </label>
                       <button
                         type="button"

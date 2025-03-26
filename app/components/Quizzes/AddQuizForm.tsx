@@ -218,14 +218,14 @@ export default function AddQuizForm() {
             </div>
 
             <div className="flex items-center mt-4">
+              <label className="text-bodyText ml-2 mr-2">Private ?</label>
               <input
-                type="checkbox"
-                name="private"
-                checked={quiz.private}
-                onChange={(e) => setQuiz({ ...quiz, private: e.target.checked })}
-                className="bg-cardBackground border border-divider rounded"
+              type="checkbox"
+              name="private"
+              checked={quiz.private}
+              onChange={(e) => setQuiz({ ...quiz, private: e.target.checked })}
+              className="appearance-none w-4 h-4 mr-4 border-2 border-gray-300 relative checked:bg-buttonSecondary checked:border-buttonSecondary transition-all bg-cardBackground "
               />
-              <label className="text-bodyText ml-2">Private</label>
             </div>
 
             {/* Questions Section */}
@@ -260,13 +260,14 @@ export default function AddQuizForm() {
                         className="flex-grow p-2 border border-divider rounded mb-2 sm:mb-0 sm:mr-2 bg-white focus:ring-2 focus:ring-primary focus:outline-none text-black"
                       />
                       <label className="flex items-center space-x-2 p-2 mt-0 sm:mt-0 rounded bg-cardBackground">
+                      <span className="text-bodyText">Correct ?</span>
                         <input
                           type="checkbox"
                           checked={option.isCorrect}
                           onChange={(e) => handleOptionChange(e, qIndex, oIndex)}
-                          className="bg-cardBackground border border-divider rounded"
+                          className="appearance-none w-4 h-4 mr-4 border-2 border-gray-300 relative checked:bg-buttonSecondary checked:border-buttonSecondary transition-all bg-cardBackground "
                         />
-                        <span className="text-bodyText">Correct</span>
+                        
                       </label>
                       <button
                         type="button"
