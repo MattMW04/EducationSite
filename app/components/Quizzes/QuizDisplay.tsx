@@ -4,6 +4,7 @@ import QuizResults from './QuizResults';
 
 interface QuizDisplayProps {
   quiz: {
+    _id: string;
     title: string;
     description: string;
     difficulty: string;
@@ -15,6 +16,24 @@ interface QuizDisplayProps {
       }[];
     }[];
   };
+}
+
+const saveQuizScore = async (quizId: string, score: number, ) => {
+  try {
+    const response = await fetch('/api/QuizResults', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ quizId, score }),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to save quiz score');
+    }
+    return await response;
+  } catch (error) {
+    console.error('Error saving quiz score:', error);
+  }
 }
 
 const QuizDisplay: React.FC<QuizDisplayProps> = ({ quiz }) => {
@@ -29,7 +48,29 @@ const QuizDisplay: React.FC<QuizDisplayProps> = ({ quiz }) => {
     setUserAnswers(newAnswers);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit =  async ()  => {
+    try{
+      const score = userAnswers.reduce((acc, answer, index) => {
+        if (answer !== -1 && quiz.questions[index].options[answer].isCorrect) {
+          return acc + 1; // increment score for correct answer
+        }
+        return acc;
+      }, 0);
+
+      
+      // Save the score to the database or perform any other action here
+      const response = await saveQuizScore(quiz._id, score); 
+      console.log('Score:', score);
+      console.log(quiz._id) // quiz._id is the quiz ID
+
+      if (response.status !== 201) {
+        throw new Error('Failed to save quiz score');
+      }
+
+    } catch (error) {
+      console.error('Error calculating score:', error);
+    }
+    // Show results after submitting the quiz
     setShowResults(true);
   };
 
