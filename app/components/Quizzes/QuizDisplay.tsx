@@ -41,6 +41,7 @@ const QuizDisplay: React.FC<QuizDisplayProps> = ({ quiz }) => {
   const questionsLength = quiz?.questions?.length || 0;
   const [userAnswers, setUserAnswers] = useState<number[]>(Array(questionsLength).fill(-1)); // initialize userAnswers array with -1 in each index to be replaced by option index of answer 
   const [showResults, setShowResults] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // track submission state
 
   const handleOptionChange = (qIndex: number, oIndex: number) => {
     const newAnswers = [...userAnswers]; // copy userAnswers array
@@ -49,6 +50,7 @@ const QuizDisplay: React.FC<QuizDisplayProps> = ({ quiz }) => {
   };
 
   const handleSubmit =  async ()  => {
+    setIsSubmitting(true); // disable button
     try{
       const score = userAnswers.reduce((acc, answer, index) => {
         if (answer !== -1 && quiz.questions[index].options[answer].isCorrect) {
@@ -63,7 +65,7 @@ const QuizDisplay: React.FC<QuizDisplayProps> = ({ quiz }) => {
       console.log('Score:', score);
       console.log(quiz._id) // quiz._id is the quiz ID
 
-      if (response.status !== 201) {
+      if (response.status !== 201 && response.status !== 200) {
         throw new Error('Failed to save quiz score');
       }
 
@@ -72,11 +74,13 @@ const QuizDisplay: React.FC<QuizDisplayProps> = ({ quiz }) => {
     }
     // Show results after submitting the quiz
     setShowResults(true);
+    
   };
 
   const handleReset = () => {
     setUserAnswers(Array(questionsLength).fill(-1));
     setShowResults(false);
+    setIsSubmitting(false); // reset submission state
   };
 
   return (
@@ -106,9 +110,12 @@ const QuizDisplay: React.FC<QuizDisplayProps> = ({ quiz }) => {
           ))}
           <button
             onClick={handleSubmit}
-            className="w-full py-2 px-4  bg-teal-500 text-white font-bold rounded hover:bg-teal-600 transition-all"
+            className={`w-full py-2 px-4 font-bold rounded transition-all ${
+              isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-teal-500 text-white hover:bg-teal-600'
+            }`}
+            disabled={isSubmitting} // ensure button is disabled when submitting
           >
-            Submit
+            {isSubmitting ? 'Submitting...' : 'Submit'}
           </button>
           {showResults && <QuizResults quiz={quiz} userAnswers={userAnswers} onReset={handleReset} />}
         </div>

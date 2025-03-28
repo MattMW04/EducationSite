@@ -31,9 +31,26 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
         const { quizId, score } = body;
 
-        if (!quizId || !score) {
+
+        if (quizId == null || score == null) { 
+            console.log(quizId, score);
             return NextResponse.json({ message: "Quiz ID and score are required" }, { status: 400 });
         }
+
+        const existingResult = await QuizResult.findOne({ userId: id, quizId });
+        if (existingResult) {
+            // Update the existing result if the new score is higher
+            if (score > existingResult.bestScore) {
+                existingResult.bestScore = score;
+                existingResult.bestScoreAttemptTime = new Date();
+                await existingResult.save();
+                return NextResponse.json(existingResult, { status: 200 });
+            } else {
+                return NextResponse.json({ message: "No update needed" }, { status: 200 });
+            }
+        }
+
+        // If no existing result, create a new one
 
         const newResult = new QuizResult({
             userId: id,
@@ -57,33 +74,4 @@ export async function POST(request: NextRequest) {
     }
 }
 
-export async function UPDATE(request: NextRequest) {
-    try {
-        const session = await getServerSession(authOptions);
-        const id = session?.user?.id;
 
-        await connectDB();
-
-        const body = await request.json();
-        const { quizId, score } = body;
-
-        if (!quizId || !score) {
-            return NextResponse.json({ message: "Quiz ID and score are required" }, { status: 400 });
-        }
-
-        const updatedResult = await QuizResult.findOneAndUpdate(
-            { userId: id, quizId },
-            { score, bestScoreAttemptTime: new Date() },
-            { new: true }
-        );
-
-        if (!updatedResult) {
-            return NextResponse.json({ message: "Failed to update quiz result" }, { status: 404 });
-        }
-
-        return NextResponse.json(updatedResult, { status: 200 });
-    } catch (error) {
-        console.error("Error updating quiz result:", error);
-        return NextResponse.json({ message: "Error updating quiz result" }, { status: 500 });
-    }
-}
