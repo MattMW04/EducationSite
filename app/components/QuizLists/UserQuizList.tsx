@@ -63,7 +63,7 @@ export default function UserQuizList() {
               <h2 className="text-xl font-bold mb-2 text-headerText break-words">{quiz.title}</h2>
               <p className="mb-2 text-bodyText break-words">{quiz.description}</p>
               <p className="mb-2 text-bodyText break-words">Difficulty: {quiz.difficulty}</p>
-              <p className="mb-2 text-bodyText break-words">High Score: {quiz.highScore}</p>
+              <p className="mb-2 text-bodyText break-words">High Score: {quiz.highScore} / {quiz.questions.length}</p>
               {quiz.private ? <p className="mb-2 text-bodyText font-bold break-words"> Privacy: Private Quiz - Viewable only by you</p> : <p className="mb-2 text-bodyText break-words"> Privacy: Public Quiz</p>}
               
               <Link
