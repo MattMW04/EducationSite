@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { getUserLinks } from '@/lib/getUserLinks';
 import QuizListHeader from '@/components/QuizLists/QuizListHeader';
+import QuizListPopover from '@/components/QuizLists/QuizListPopover';
 import Link from 'next/link';
 
 interface Quiz {
@@ -22,6 +23,8 @@ interface Quiz {
 
 export default function UserQuizList() {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [quizName, setQuizName] = useState<string>("");
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -36,6 +39,15 @@ export default function UserQuizList() {
   }
   , []);
 
+  const handleClose = () => {
+    setIsOpen(false); 
+  }
+
+  const handleOpen = ( quizName ) => {
+    setQuizName(quizName);
+    setIsOpen(true);
+  }
+
   return (
   <div className="min-h-screen flex flex-col">
     <QuizListHeader
@@ -45,6 +57,9 @@ export default function UserQuizList() {
     <div
       className={` flex items-center justify-center `}
     >
+      {isOpen && (
+        <QuizListPopover quizTitle={quizName} onClose={handleClose} />
+      )}
       {quizzes.length === 0 ? (
         <div className="text-center p-4 flex flex-col items-center justify-start min-h-[200px] min-w-[400px] md:min-h-[400px] md:min-w-[600px] mt-4">
           <h1 className="text-2xl font-bold mb-4 text-headerText break-words">No quizzes found</h1>
@@ -84,6 +99,14 @@ export default function UserQuizList() {
               >
                 Go to Quiz
               </Link>
+              <button
+                className="inline-block px-4 py-2 bg-error text-white rounded hover:bg-red-700 transition-all break-words ml-4"
+                onClick={() => {
+                  // Handle delete quiz action here
+                  handleOpen(quiz.title);
+                }}>
+                Delete Quiz
+              </button>
             </div>
           ))}
         </div>
