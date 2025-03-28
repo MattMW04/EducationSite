@@ -7,13 +7,20 @@ export const getPublicLinks = async (): Promise<any[]> => {
 
         const links = await linksResponse.json();
         const results = await resultsResponse.json();
+        
 
-        if (!linksResponse.ok || !resultsResponse.ok) {
+        if (!linksResponse.ok ) {
             console.log(links.message || results.message);
             return [];
         }
 
         const combined = links.map((link: any) => {
+            if(results.message === "No quiz results found") {
+                return {
+                    ...link,
+                    highScore: "N/A"
+                };
+            };
             const result = results.find((res: any) => res.quizId === link._id);
             return {
                 ...link,
