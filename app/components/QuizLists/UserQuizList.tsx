@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { getUserLinks } from '@/lib/getUserLinks';
 import QuizListHeader from '@/components/QuizLists/QuizListHeader';
 import QuizListPopover from '@/components/QuizLists/QuizListPopover';
+import { toast } from "react-toastify"; 
 import Link from 'next/link';
 
 interface Quiz {
@@ -47,6 +48,46 @@ export default function UserQuizList() {
     setQuizName(quizName);
     setIsOpen(true);
   }
+  const handleDelete = async (quizName: string) => {
+    try {
+      const response = await fetch(`/api/quizzes/${quizName}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error('Failed to delete quiz');
+      }
+      const data = await response.json();
+
+      if (data.message === "Quiz deleted successfully") {
+        toast.success("Quiz deleted successfully", {
+          position: "top-right",
+          style : {
+            backgroundColor: "bg-cardBackground",
+            color: "black",
+            padding: "10px", 
+          },
+          autoClose: 2000,
+          progressClassName: "bg-green-500",
+        });
+        setQuizzes(quizzes.filter((quiz) => quiz.title !== quizName));
+      } else {
+        toast.error(data.message, {
+          position: "top-right",
+          style : {
+            backgroundColor: "#F44336",
+            color: "white",
+            padding: "10px",
+          },
+          autoClose: 2000,
+        });
+      }
+      
+    } catch (error) {
+      console.error('Error deleting quiz:', error);
+    } finally {
+      handleClose(); 
+    }
+  }
 
   return (
   <div className="min-h-screen flex flex-col">
@@ -58,7 +99,7 @@ export default function UserQuizList() {
       className={` flex items-center justify-center `}
     >
       {isOpen && (
-        <QuizListPopover quizTitle={quizName} onClose={handleClose} />
+        <QuizListPopover quizTitle={quizName} onClose={handleClose} handleDelete={handleDelete} />
       )}
       {quizzes.length === 0 ? (
         <div className="text-center p-4 flex flex-col items-center justify-start min-h-[200px] min-w-[400px] md:min-h-[400px] md:min-w-[600px] mt-4">
