@@ -17,7 +17,7 @@ export const getPublicLinks = async (): Promise<any[]> => {
             const result = results.find((res: any) => res.quizId === link._id);
             return {
                 ...link,
-                highScore: result?.bestScore || 0
+                highScore: result?.bestScore || "N/A"
             };
         });
 

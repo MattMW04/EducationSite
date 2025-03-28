@@ -37,8 +37,14 @@ export default function PublicQuizList() {
         >
             <h2 className="text-xl font-bold mb-2 text-headerText">{quiz.title}</h2>
             <p className="mb-2 text-bodyText">{quiz.description}</p>
+            {quiz.highScore === "N/A" ? (
+              <p className="mb-2 text-bodyText">High Score: Not Attempted</p>
+            ) : (
+              <p className="mb-2 text-bodyText">
+                High Score: {quiz.highScore} / {quiz.questions.length}
+              </p>
+            )}
             <p className="mb-2 text-bodyText">Difficulty: {quiz.difficulty}</p>
-            <p className="mb-2 text-bodyText">High Score: {quiz.highScore} / {quiz.questions.length}</p>
             <Link
                 href={`/quiz/${quiz.title}`}
                 className="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-buttonHover transition-all"
