@@ -62,6 +62,7 @@ export const config = {
         "/YourQuizzes/:path*", 
         "/Quizzes/:path*", 
         "/quiz/:path*", 
+        "/createQuiz/:path*",
         "/editQuiz/:path*", 
         "/Dashboard/:path*",
         "/Account/:path*",
