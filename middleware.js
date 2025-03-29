@@ -11,6 +11,7 @@ export default withAuth({
 export async function middleware(req){
 
     const cookies = req.cookies;
+    console.log("Cookies: ", cookies);
 
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET, headers: req.headers, cookies });
 
