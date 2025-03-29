@@ -13,7 +13,20 @@ export async function middleware(req){
     const cookies = req.cookies;
     console.log("Cookies: ", cookies);
 
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET, headers: req.headers, cookies });
+    
+
+    // Check for both possible cookie names
+    const hasDefaultCookie = cookies.has("next-auth.session-token");
+    const hasSecureCookie = cookies.has("__Secure-next-auth.session-token");
+
+    // Determine which cookie name to use
+    const cookieName = hasSecureCookie 
+    ? "__Secure-next-auth.session-token" 
+    : "next-auth.session-token";
+
+    console.log("Using cookie name: ", cookieName);
+
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET, headers: req.headers, cookies, cookieName : cookieName });
 
     console.log("Token: ", token);
 
