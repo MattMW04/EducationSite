@@ -72,7 +72,7 @@ export const authOptions = {
             name: "next-auth.session-token",
             options: {
                 httpOnly: true,
-                sameSite: "lax",
+                sameSite: "none",
                 secure: process.env.NODE_ENV === "production",
                 path : "/",
             },
