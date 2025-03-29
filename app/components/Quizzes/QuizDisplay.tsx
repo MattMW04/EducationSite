@@ -4,6 +4,7 @@ import QuizResults from './QuizResults';
 
 interface QuizDisplayProps {
   quiz: {
+    _id: string;
     title: string;
     description: string;
     difficulty: string;
@@ -17,11 +18,30 @@ interface QuizDisplayProps {
   };
 }
 
+const saveQuizScore = async (quizId: string, score: number, ) => {
+  try {
+    const response = await fetch('/api/QuizResults', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ quizId, score }),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to save quiz score');
+    }
+    return await response;
+  } catch (error) {
+    console.error('Error saving quiz score:', error);
+  }
+}
+
 const QuizDisplay: React.FC<QuizDisplayProps> = ({ quiz }) => {
   // Ensure quiz and quiz.questions are defined
   const questionsLength = quiz?.questions?.length || 0;
   const [userAnswers, setUserAnswers] = useState<number[]>(Array(questionsLength).fill(-1)); // initialize userAnswers array with -1 in each index to be replaced by option index of answer 
   const [showResults, setShowResults] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // track submission state
 
   const handleOptionChange = (qIndex: number, oIndex: number) => {
     const newAnswers = [...userAnswers]; // copy userAnswers array
@@ -29,13 +49,38 @@ const QuizDisplay: React.FC<QuizDisplayProps> = ({ quiz }) => {
     setUserAnswers(newAnswers);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit =  async ()  => {
+    setIsSubmitting(true); // disable button
+    try{
+      const score = userAnswers.reduce((acc, answer, index) => {
+        if (answer !== -1 && quiz.questions[index].options[answer].isCorrect) {
+          return acc + 1; // increment score for correct answer
+        }
+        return acc;
+      }, 0);
+
+      
+      // Save the score to the database or perform any other action here
+      const response = await saveQuizScore(quiz._id, score); 
+      console.log('Score:', score);
+      console.log(quiz._id) // quiz._id is the quiz ID
+
+      if (response.status !== 201 && response.status !== 200) {
+        throw new Error('Failed to save quiz score');
+      }
+
+    } catch (error) {
+      console.error('Error calculating score:', error);
+    }
+    // Show results after submitting the quiz
     setShowResults(true);
+    
   };
 
   const handleReset = () => {
     setUserAnswers(Array(questionsLength).fill(-1));
     setShowResults(false);
+    setIsSubmitting(false); // reset submission state
   };
 
   return (
@@ -65,9 +110,12 @@ const QuizDisplay: React.FC<QuizDisplayProps> = ({ quiz }) => {
           ))}
           <button
             onClick={handleSubmit}
-            className="w-full py-2 px-4  bg-teal-500 text-white font-bold rounded hover:bg-teal-600 transition-all"
+            className={`w-full py-2 px-4 font-bold rounded transition-all ${
+              isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-teal-500 text-white hover:bg-teal-600'
+            }`}
+            disabled={isSubmitting} // ensure button is disabled when submitting
           >
-            Submit
+            {isSubmitting ? 'Submitting...' : 'Submit'}
           </button>
           {showResults && <QuizResults quiz={quiz} userAnswers={userAnswers} onReset={handleReset} />}
         </div>

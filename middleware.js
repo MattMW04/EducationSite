@@ -19,14 +19,14 @@ export async function middleware(req){
         return NextResponse.redirect(new URL("/Account/Login", req.nextUrl.origin));
     }
 
-    // uif user is on admin page and not an admin - redirect to /
+    // if user is on admin page and not an admin - redirect to /
     if (pathname.startsWith("/admin") && token.role !== "admin") {
         const url = req.nextUrl.clone();
         url.pathname = "/";
         return NextResponse.redirect(url);
     }
 
-    // if user is logged in and trys to direct to login or signup - redirect to /
+    // if user is logged in and tries to direct to login or signup - redirect to /
     if (pathname.startsWith("/Account/Login") || pathname.startsWith("/Account/SignUp")) {
         if(token){
             const url = req.nextUrl.clone();

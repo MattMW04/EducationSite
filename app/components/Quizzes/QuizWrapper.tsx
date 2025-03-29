@@ -5,6 +5,7 @@ import QuizDisplay from './QuizDisplay';
 
 interface QuizWrapperProps {
     quiz: {
+      _id: string;
       title: string;
       description: string;
       difficulty: string;

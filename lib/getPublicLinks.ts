@@ -1,20 +1,36 @@
-
-
-export const getPublicLinks = async (): Promise<[]> => {
+export const getPublicLinks = async (): Promise<any[]> => {
     try {
-        const response = await fetch('/api/quizzes/public');
-        const data = await response.json();
-        if (!response.ok) {
-            throw new Error(data.message || 'Failed to fetch public quizzes');
+        const [linksResponse, resultsResponse] = await Promise.all([
+            fetch('/api/quizzes/public'),
+            fetch('/api/QuizResults')
+        ]);
+
+        const links = await linksResponse.json();
+        const results = await resultsResponse.json();
+        
+
+        if (!linksResponse.ok ) {
+            console.log(links.message || results.message);
+            return [];
         }
 
-        if(data.length === 0) {
-            console.log('No public quizzes found');
-            throw new Error('No public quizzes found');
-        }
-        return data;
+        const combined = links.map((link: any) => {
+            if(results.message === "No quiz results found") {
+                return {
+                    ...link,
+                    highScore: "N/A"
+                };
+            };
+            const result = results.find((res: any) => res.quizId === link._id);
+            return {
+                ...link,
+                highScore: result?.bestScore || "N/A"
+            };
+        });
+
+        return combined;
     } catch (error) {
-        console.error('Error fetching public quizzes:', error);
+        console.error('Error fetching public links or quiz results:', error);
         throw error;
     }
 };
