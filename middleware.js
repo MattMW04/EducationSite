@@ -13,8 +13,6 @@ export async function middleware(req){
     const cookies = req.cookies;
     console.log("Cookies: ", cookies);
 
-    
-
     // Check for both possible cookie names
     const hasDefaultCookie = cookies.has("next-auth.session-token");
     const hasSecureCookie = cookies.has("__Secure-next-auth.session-token");
@@ -32,8 +30,13 @@ export async function middleware(req){
 
     const { pathname } = req.nextUrl;
 
-    // if user is not logged in and is not on the login page - redirect to login
-    if (!token && !pathname.startsWith("/Account/Login") && !pathname.startsWith("/Account/SignUp")) {
+    // If no token exists, allow access to login/signup pages
+    if (!token && (pathname.startsWith("/Account/Login") || pathname.startsWith("/Account/SignUp"))) {
+        return NextResponse.next();
+    }
+
+    // If no token exists and user tries to access protected routes, redirect to login
+    if (!token) {
         return NextResponse.redirect(new URL("/Account/Login", req.nextUrl.origin));
     }
 
@@ -45,13 +48,13 @@ export async function middleware(req){
     }
 
     // if user is logged in and tries to direct to login or signup - redirect to /
-    if (pathname.startsWith("/Account/Login") || pathname.startsWith("/Account/SignUp")) {
-        if(token){
-            const url = req.nextUrl.clone();
-            url.pathname = "/";
-            return NextResponse.redirect(url);
-        }
-    }
+    // if (pathname.startsWith("/Account/Login") || pathname.startsWith("/Account/SignUp")) {
+    //     if(token){
+    //         const url = req.nextUrl.clone();
+    //         url.pathname = "/";
+    //         return NextResponse.redirect(url);
+    //     }
+    // }
 
     return NextResponse.next();
 }
@@ -68,4 +71,3 @@ export const config = {
         "/Account/:path*",
     ] 
 };
-
