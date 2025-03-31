@@ -1,5 +1,6 @@
 import React from 'react';
 import CourseList from '@/app/components/Courses/CourseList';
+import PublicCourseList from '../components/Courses/PublicCourseList';
 
 export const metadata = {
     title: 'AccessEDUK: Courses',
@@ -9,7 +10,7 @@ export const metadata = {
 export default function CoursesPage() {
     return (
         <div className="min-h-screen flex items-center justify-center">
-            <CourseList />
+            <PublicCourseList />
         </div>
     );
 }
