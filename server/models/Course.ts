@@ -12,6 +12,8 @@ export interface Course extends Document {
     quizzes: mongoose.Types.ObjectId[];
     createdAt: Date;
     updatedAt: Date;
+    createdBy: mongoose.Types.ObjectId;
+    private: boolean;
 }
 
 const ChapterSchema: Schema = new Schema({
@@ -25,6 +27,8 @@ const CourseSchema: Schema = new Schema(
         description: { type: String, required: true },
         chapters: { type: [ChapterSchema], required: true },
         quizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Quiz' }],
+        createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        private: { type: Boolean, default: false },
     },
     {
         timestamps: true, 

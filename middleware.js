@@ -21,11 +21,11 @@ export async function middleware(req){
     ? "__Secure-next-auth.session-token" 
     : "next-auth.session-token";
 
-    console.log("Using cookie name: ", cookieName);
+    
 
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET, headers: req.headers, cookies, cookieName : cookieName });
 
-    console.log("Token: ", token);
+    
 
     const { pathname } = req.nextUrl;
 
