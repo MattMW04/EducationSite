@@ -11,7 +11,6 @@ export default withAuth({
 export async function middleware(req){
 
     const cookies = req.cookies;
-    console.log("Cookies: ", cookies);
 
     // Check for both possible cookie names
     const hasDefaultCookie = cookies.has("next-auth.session-token");
