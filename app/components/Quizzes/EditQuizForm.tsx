@@ -167,7 +167,7 @@ export default function EditQuizForm({ initialQuizData }: EditQuizFormProps) {
                 name="title"
                 value={quiz.title}
                 onChange={handleChange}
-                className="w-full p-3 border border-divider rounded-md bg-white focus:ring-2 focus:ring-primary focus:outline-none text-black"
+                className="w-full p-3 border border-divider rounded-md bg-gray-200 focus:ring-2 focus:ring-primary focus:outline-none text-black"
                 disabled
               />
             </div>

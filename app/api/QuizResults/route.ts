@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     await connectDB();
 
     const quizResults = await QuizResult.find({ userId: id });
-    console.log(quizResults);
+    
 
     if (!quizResults || quizResults.length === 0) {
         return NextResponse.json({ message: "No quiz results found" }, { status: 404 });
