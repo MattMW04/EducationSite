@@ -55,7 +55,7 @@ export default function PublicCourseList() {
           {courses?.map((course, i) => (
             <div
               key={i}
-              className="p-4 mb-2 bg-cardBackground shadow-lg rounded min-h-[200px] min-w-[400px] ml-4"
+              className="p-4 mb-2 bg-cardBackground shadow-lg rounded min-h-[200px] min-w-[400px] ml-4 mr-4"
             >
               <h2 className="text-xl font-bold mb-2 text-headerText">{course.title}</h2>
               <p className="mb-2 text-bodyText">{course.description}</p>

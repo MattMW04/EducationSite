@@ -122,7 +122,9 @@ export default function EditCourseForm({ courseName }: EditCourseFormProps) {
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-3 border border-divider rounded-md bg-white focus:ring-2 focus:ring-primary focus:outline-none text-black"
+                className="w-full p-3 border border-divider rounded-md bg-gray-200 focus:ring-2 focus:ring-primary focus:outline-none text-black"
+                disabled 
+                aria-disabled="true"
               />
             </div>
 

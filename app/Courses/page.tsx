@@ -1,5 +1,5 @@
 import React from 'react';
-import CourseList from '@/app/components/Courses/CourseList';
+
 import PublicCourseList from '../components/Courses/PublicCourseList';
 
 export const metadata = {

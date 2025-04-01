@@ -90,7 +90,7 @@ export default function UserCourseList() {
           {courses.map((course, i) => (
             <div
               key={i}
-              className="p-4 mb-2 bg-cardBackground shadow-lg rounded min-h-[200px] min-w-[400px] ml-4"
+              className="p-4 mb-2 bg-cardBackground shadow-lg rounded min-h-[200px] min-w-[400px] ml-4 mr-4"
             >
               <h2 className="text-xl font-bold mb-2 text-headerText">{course.title}</h2>
               <p className="mb-2 text-bodyText">{course.description}</p>
@@ -108,12 +108,12 @@ export default function UserCourseList() {
               </Link>
               <Link
                 href={`/course/${course.title}`}
-                className="inline-block px-4 py-2 bg-green-500 text-white rounded hover:bg-buttonHover transition-all"
+                className="inline-block px-4 py-2 bg-green-500 text-white rounded  hover:bg-buttonSecondaryHover transition-all mr-2"
               >
                 View Course
               </Link>
               <button
-                className="inline-block px-4 py-2 bg-red-500 text-white rounded hover:bg-buttonHover transition-all ml-2"
+                className="inline-block px-4 py-2  bg-error text-white rounded hover:bg-red-700 transition-all   p-2 sm: mt-4"
                 onClick={() => handleOpen(course.title)}
               >
                 Delete Course
