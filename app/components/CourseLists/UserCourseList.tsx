@@ -126,12 +126,12 @@ export default function UserCourseList() {
               >
                 View Course
               </Link>
-              <button
-                className="inline-block px-4 py-2 bg-error text-white rounded hover:bg-red-700 transition-all sm: ml-4"
+                <button
+                className="inline-block px-4 py-2 bg-error text-white rounded hover:bg-red-700 transition-all mt-4 "
                 onClick={() => handleOpen(course.title)}
-              >
+                >
                 Delete Course
-              </button>
+                </button>
             </div>
           ))}
         </div>
