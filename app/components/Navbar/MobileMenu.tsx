@@ -20,22 +20,22 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ handleToggle, isOpen, navLinks 
         <div className={`fixed top-0 right-0 h-full w-64 bg-nav text-white p-4 z-50 transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-500 ease-in-out`}>
             <div className="absolute top-2 left-0 w-full flex justify-between items-center">
                 <h2 className="text-lg text-white-500 ml-4">Menu</h2>
-                <button onClick={handleToggle} className="text-white mr-4">
+                <button onClick={handleToggle} className="text-white mr-6">
                     <X className="w-8 h-8 hover:text-blue-500" size="100" />
                 </button>
             </div>
-            <div className="flex-1 flex flex-col">
+            <div className="flex-1 flex flex-col items-center justify-center space-y-4 mt-8">
                 {navLinks.map((link, index) =>
                     link.subLinks ? (
-                        <div key={index} className="dropdown dropdown-bottom dropdown-center">
+                        <div key={index} className="dropdown dropdown-bottom dropdown-center ">
                             <div
                                 tabIndex={0}
                                 role="button"
-                                className="flex-1 text-center btn btn-ghost"
+                                className="text-center btn btn-ghost"
                             >
                                 {link.label}
                             </div>
-                            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-50 w-55 p-2 shadow-sm mx-auto">
                                 {link.subLinks.map((subLink, subIndex) => (
                                     <li key={subIndex}>
                                         <Link href={subLink.href} className={`${pathname === subLink.href ? 'border-b-2 border-white' : ''}`}>
@@ -49,11 +49,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ handleToggle, isOpen, navLinks 
                         <button
                             key={index}
                             onClick={() => signOut()}
-                            className="flex-1 text-center btn btn-ghost">
+                            className="text-center btn btn-ghost">
                             {link.label}
                         </button>
                     ) : (
-                        <Link key={index} href={link.href} className={`flex-1 text-center btn btn-ghost ${pathname === link.href ? 'border-b-2 border-white' : ''}`}>
+                        <Link key={index} href={link.href} className={`text-center btn btn-ghost ${pathname === link.href ? 'border-b-2 border-white' : ''}`}>
                             {link.label}
                         </Link>
                     )
