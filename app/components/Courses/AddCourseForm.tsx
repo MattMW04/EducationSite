@@ -45,6 +45,10 @@ export default function AddCourseForm() {
     setChapters(updatedChapters);
   };
 
+  const deleteChapter = (index: number) => {
+    setChapters(chapters.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !description.trim()) {
@@ -153,6 +157,13 @@ export default function AddCourseForm() {
                     onChange={(e) => handleChapterChange(index, "content", e.target.value)}
                     className="w-full p-2 border border-divider rounded bg-white focus:ring-2 focus:ring-primary focus:outline-none text-black"
                   />
+                  <button
+                    type="button"
+                    onClick={() => deleteChapter(index)}
+                    className="py-1 px-3 mt-2 bg-red-500 text-white rounded"
+                  >
+                    Delete Chapter
+                  </button>
                 </div>
               ))}
               <button

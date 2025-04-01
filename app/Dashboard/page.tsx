@@ -16,7 +16,7 @@ const DashboardPage: React.FC = () => {
         <div className="bg-background min-h-screen flex flex-col items-center justify-start pt-24 p-4 w-full">
             <div className="flex flex-col items-start mb-8">
                 <h1 className="text-bodyText text-2xl font-bold">Dashboard</h1>
-                <p className="text-bodyText mt-2">Welcome to AccessEdUk! Please explre a look at the features below. Navigation is available through the Navigation bar and also the boxes below. </p>
+                <p className="text-bodyText mt-2">Welcome to AccessEdUk! Please explore a look at the features below. Navigation is available through the Navigation bar and also the boxes below. </p>
             </div>
             <h2 className="text-2xl font-semibold text-headerText mb-4">Features</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl">

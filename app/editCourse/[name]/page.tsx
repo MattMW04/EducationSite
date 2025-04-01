@@ -6,8 +6,8 @@ export const metadata = {
     description: 'Edit an existing course',
 };
 
-export default function EditCoursePage({ params }) {
-    const { name } = params;
+export default async function EditCoursePage({ params }) {
+    const { name } = await params;
 
     return (
         <div className="min-h-screen flex items-center justify-center">
