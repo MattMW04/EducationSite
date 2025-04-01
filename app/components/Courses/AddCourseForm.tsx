@@ -68,7 +68,7 @@ export default function AddCourseForm() {
       chapters,
       createdBy: session?.user?.id,
       private: privateCourse,
-      quizzes: selectedQuizzes,
+      quizzes: selectedQuizzes, 
     };
 
     try {

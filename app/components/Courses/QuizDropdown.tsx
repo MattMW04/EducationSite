@@ -32,11 +32,11 @@ export default function QuizDropdown({ selectedQuizzes, setSelectedQuizzes }: Qu
     fetchQuizzes();
   }, []);
 
-  const handleQuizSelection = (quizId: string) => {
+  const handleQuizSelection = (quizName: string) => {
     setSelectedQuizzes((prevSelected) =>
-      prevSelected.includes(quizId)
-        ? prevSelected.filter((id) => id !== quizId) // Remove quizId if already selected
-        : [...prevSelected, quizId] // Add quizId if not selected
+      prevSelected.includes(quizName)
+        ? prevSelected.filter((id) => id !== quizName) // Remove quizId if already selected
+        : [...prevSelected, quizName] // Add quizId if not selected
     );
   };
 
@@ -50,8 +50,8 @@ export default function QuizDropdown({ selectedQuizzes, setSelectedQuizzes }: Qu
             <input
               type="checkbox"
               id={quiz._id} // Ensure unique id for each checkbox
-              checked={selectedQuizzes.includes(quiz._id)} // Check if quizId is in selectedQuizzes
-              onChange={() => handleQuizSelection(quiz._id)} // Toggle quizId in selectedQuizzes
+              checked={selectedQuizzes.includes(quiz.title)} // Check if quizId is in selectedQuizzes
+              onChange={() => handleQuizSelection(quiz.title)} // Toggle quizId in selectedQuizzes
               className="appearance-none w-4 h-4 border-2 border-gray-300 relative checked:bg-buttonSecondary checked:border-buttonSecondary transition-all bg-cardBackground mr-2"
             />
             <label htmlFor={quiz._id} className="text-bodyText">

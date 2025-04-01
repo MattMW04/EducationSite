@@ -9,7 +9,7 @@ export interface Course extends Document {
     title: string;
     description: string;
     chapters: Chapter[];
-    quizzes: mongoose.Types.ObjectId[];
+    quizzes: string[]; 
     createdAt: Date;
     updatedAt: Date;
     createdBy: mongoose.Types.ObjectId;
@@ -26,7 +26,7 @@ const CourseSchema: Schema = new Schema(
         title: { type: String, required: true },
         description: { type: String, required: true },
         chapters: { type: [ChapterSchema], required: true },
-        quizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Quiz' }],
+        quizzes: [{ type: String }], 
         createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         private: { type: Boolean, default: false },
     },

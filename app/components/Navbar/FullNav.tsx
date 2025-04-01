@@ -26,4 +26,4 @@ export default function FullNav({ navLinks }) {
             </div>
         </div>
     );
-};
+}
