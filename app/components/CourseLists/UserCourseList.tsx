@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from "react-toastify";
 import Link from 'next/link';
+import CourseListPopover from '@/components/CourseLists/CourseListPopover'
 
 interface Course {
   title: string;
@@ -51,12 +52,18 @@ export default function UserCourseList() {
         toast.success("Course deleted successfully", {
           position: "top-right",
           autoClose: 2000,
+          style: {
+            padding: "16px",
+          },
         });
         setCourses(courses.filter((course) => course.title !== courseName));
       } else {
         toast.error(data.message, {
           position: "top-right",
           autoClose: 2000,
+          style: {
+            padding: "16px",
+          },
         });
       }
     } catch (error) {
@@ -74,6 +81,13 @@ export default function UserCourseList() {
           Manage and explore the courses you have created.
         </p>
       </header>
+      {isOpen && (
+        <CourseListPopover
+          courseTitle={courseName}
+          onClose={handleClose}
+          handleDelete={handleDelete}
+        />
+      )}
       {courses.length === 0 ? (
         <div className="text-center p-4 flex flex-col items-center justify-start min-h-[200px] min-w-[400px] md:min-h-[400px] md:min-w-[600px] mt-4">
           <h1 className="text-2xl font-bold mb-4 text-headerText break-words">No courses found</h1>
@@ -113,13 +127,12 @@ export default function UserCourseList() {
                 View Course
               </Link>
               <button
-                className="inline-block px-4 py-2  bg-error text-white rounded hover:bg-red-700 transition-all   p-2 sm: mt-4"
+                className="inline-block px-4 py-2 bg-error text-white rounded hover:bg-red-700 transition-all sm: ml-4"
                 onClick={() => handleOpen(course.title)}
               >
                 Delete Course
               </button>
             </div>
-            
           ))}
         </div>
       )}
