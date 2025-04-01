@@ -10,11 +10,30 @@ export default function FullNav({ navLinks }) {
         <div className="flex justify-center items-center w-full relative">
             <div className="flex-1 flex justify-center space-x-8 mt-2 md:mt-0 max-w-screen-lg">
                 {navLinks.map((link, index) =>
-                    link.label === "Logout" ? (
+                    link.subLinks ? (
+                        <div key={index} className="dropdown dropdown-bottom dropdown-center">
+                            <div
+                                tabIndex={0}
+                                role="button"
+                                className="flex-1 text-center btn btn-ghost"
+                            >
+                                {link.label}
+                            </div>
+                            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                {link.subLinks.map((subLink, subIndex) => (
+                                    <li key={subIndex}>
+                                        <Link href={subLink.href} className={`${pathname === subLink.href ? 'bg-blue-500 text-white' : ''}`}>
+                                            {subLink.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ) : link.label === "Logout" ? (
                         <button
                             key={index}
                             onClick={() => signOut()}
-                            className="flex-1 text-center btn btn-ghost" >
+                            className="flex-1 text-center btn btn-ghost">
                             {link.label}
                         </button>
                     ) : (
