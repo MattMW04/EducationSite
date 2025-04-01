@@ -26,7 +26,7 @@ const ClientLoginForm = () =>{
 
 
     const handleLogout = async () => {
-        const result = await signOut({ redirect: false }); // Prevent redirect for debugging
+        const result = await signOut({ redirect: false }); 
         if (result?.url) {
             toast.success("Logout successful!", { position: "top-right" });
             router.push(result.url); // Redirect to the URL returned by signOut

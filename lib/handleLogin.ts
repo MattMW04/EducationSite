@@ -20,13 +20,16 @@ async function handleLogin(username, password, router, setError){
             hideProgressBar: false,
             closeOnClick: true,
             draggable: true,
+            style: {
+            padding: "16px", 
+            },
         });
         
         const updatedSession = await getSession();
         if(updatedSession?.user?.role === "admin"){
             router.push("/admin");
         }else{
-            router.push("/");
+            router.push("/Dashboard");
         }   
     }
 };
