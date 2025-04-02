@@ -35,7 +35,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ handleToggle, isOpen, navLinks 
                             >
                                 {link.label}
                             </div>
-                            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-50 w-55 p-2 shadow-sm mx-auto">
+                            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-50 w-50 p-2 shadow-sm mx-auto">
                                 {link.subLinks.map((subLink, subIndex) => (
                                     <li key={subIndex}>
                                         <Link href={subLink.href} className={`${pathname === subLink.href ? 'border-b-2 border-white' : ''}`}>

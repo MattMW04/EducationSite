@@ -5,6 +5,8 @@ import { getToken } from "next-auth/jwt";
 export default withAuth({
     pages:{
         signIn: "/Account/Login",
+
+        
     },
 });
 
@@ -30,7 +32,7 @@ export async function middleware(req){
     const { pathname } = req.nextUrl;
 
     // If no token exists, allow access to login/signup pages
-    if (!token && (pathname.startsWith("/Account/Login") || pathname.startsWith("/Account/SignUp"))) {
+    if (!token && (pathname.startsWith("/Account/Login") || pathname.startsWith("/Account/SignUp") || pathname.startsWith("/Feedback"))) {
         return NextResponse.next();
     }
 
@@ -47,13 +49,13 @@ export async function middleware(req){
     }
 
     // if user is logged in and tries to direct to login or signup - redirect to /
-    // if (pathname.startsWith("/Account/Login") || pathname.startsWith("/Account/SignUp")) {
-    //     if(token){
-    //         const url = req.nextUrl.clone();
-    //         url.pathname = "/";
-    //         return NextResponse.redirect(url);
-    //     }
-    // }
+    if (pathname.startsWith("/Account/Login") || pathname.startsWith("/Account/SignUp")) {
+        if(token){
+            const url = req.nextUrl.clone();
+            url.pathname = "/";
+            return NextResponse.redirect(url);
+        }
+    }
 
     return NextResponse.next();
 }
@@ -68,5 +70,10 @@ export const config = {
         "/editQuiz/:path*", 
         "/Dashboard/:path*",
         "/Account/:path*",
+        "/YourCourses/:path*",
+        "/Courses/:path*",
+        "/course/:path*",
+        "/createCourse/:path*",
+        "/editCourse/:path*",
     ] 
 };

@@ -7,7 +7,7 @@ import { authOptions } from "@/lib/auth";
 export async function GET(request: NextRequest, { params }: { params: Promise<{ name: string }> }) {
     try {
         console.log("session check started ");
-        const session = await getServerSession({ req: request, ...authOptions });
+        const session = await getServerSession(authOptions); 
         if (!session) {
             console.error('No session found');
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

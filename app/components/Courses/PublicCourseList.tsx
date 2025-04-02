@@ -13,12 +13,19 @@ export default function PublicCourseList() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch("/api/courses/user");
+        const response = await fetch("/api/courses/public");
         const data = await response.json();
-        setCourses(data);
-        console.log("Fetched courses:", data);
+
+        if (Array.isArray(data)) {
+          setCourses(data);
+          console.log("Fetched courses:", data);
+        } else {
+          // no courses found 
+          setCourses([]);
+        }
       } catch (error) {
         console.error("Error fetching courses:", error);
+        setCourses([]); // Handle fetch errors by setting courses to an empty array
       }
     };
     fetchCourses();
@@ -45,10 +52,10 @@ export default function PublicCourseList() {
             courses.length <= 2 ? "place-items-center" : ""
           }`}
         >
-          {courses.map((course, i) => (
+          {courses?.map((course, i) => (
             <div
               key={i}
-              className="p-4 mb-2 bg-cardBackground shadow-lg rounded min-h-[200px] min-w-[400px] ml-4"
+              className="p-4 mb-2 bg-cardBackground shadow-lg rounded min-h-[200px] min-w-[400px] ml-4 mr-4"
             >
               <h2 className="text-xl font-bold mb-2 text-headerText">{course.title}</h2>
               <p className="mb-2 text-bodyText">{course.description}</p>
