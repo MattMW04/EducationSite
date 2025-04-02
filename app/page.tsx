@@ -16,7 +16,7 @@ const HomePage = () => {
 
         <h2 className="text-2xl mb-4 font-semibold text-headerText">Background of the Site</h2>
         <p className="text-lg mb-6  text-bodyText">
-          This Product was created by <Link className="text-lg text-boyText underline" href="https://www.linkedin.com/in/matt-wilcox-73106a2ab/">Matt Wilcox</Link> as part of his Final Year Dissertation project .
+          This Product was created by <Link className="text-lg text-boyText underline" href="https://www.linkedin.com/in/matt-wilcox-73106a2ab/" target="_blank" rel="noopener noreferrer">Matt Wilcox</Link> as part of his Final Year Dissertation project .
           The aim of the project was to create a platform that would allow users to create and share quizzes with others, while also being Accessible on a range of devices.
         </p>
 
