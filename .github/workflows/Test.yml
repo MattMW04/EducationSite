@@ -59,7 +59,11 @@ jobs:
       - name: Wait for server to be ready
         run: npx wait-on http://localhost:3000
 
-      # Step 7: Run Cypress tests
+      # Step 7: Run unit tests
+      - name: Run Unit Tests
+        run: npm test
+
+      # Step 8: Run Cypress tests
       - name: Run Cypress tests
         run: npx cypress run
 
