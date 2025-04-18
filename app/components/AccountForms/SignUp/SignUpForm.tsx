@@ -1,4 +1,4 @@
-'use client'; // This ensures React client-side logic works
+'use client'; 
 
 import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation'; 
@@ -55,7 +55,7 @@ const SignUpForm = () => {
                 password,
                 redirect: false,
                 });
-            router.push('/');
+            router.push('/Dashboard');
         }
     };
 

@@ -8,10 +8,15 @@ interface Quiz {
 
 interface QuizDropdownProps {
   selectedQuizzes: string[];
-  setSelectedQuizzes: React.Dispatch<React.SetStateAction<string[]>>; // Update type to match functional updates
+  setSelectedQuizzes: React.Dispatch<React.SetStateAction<string[]>>;
+  noQuizzesMessage?: string; 
 }
 
-export default function QuizDropdown({ selectedQuizzes, setSelectedQuizzes }: QuizDropdownProps) {
+export default function QuizDropdown({
+  selectedQuizzes,
+  setSelectedQuizzes,
+  noQuizzesMessage = "No quizzes available.",
+}: QuizDropdownProps) {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [error, setError] = useState<string>("");
 
@@ -35,10 +40,14 @@ export default function QuizDropdown({ selectedQuizzes, setSelectedQuizzes }: Qu
   const handleQuizSelection = (quizName: string) => {
     setSelectedQuizzes((prevSelected) =>
       prevSelected.includes(quizName)
-        ? prevSelected.filter((id) => id !== quizName) // Remove quizId if already selected
-        : [...prevSelected, quizName] // Add quizId if not selected
+        ? prevSelected.filter((id) => id !== quizName)
+        : [...prevSelected, quizName]
     );
   };
+
+  if (!quizzes || quizzes.length === 0) {
+    return <p className="text-bodyText">{noQuizzesMessage}</p>;
+  }
 
   return (
     <div className="mt-4">
@@ -46,12 +55,12 @@ export default function QuizDropdown({ selectedQuizzes, setSelectedQuizzes }: Qu
       {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
       <div className="space-y-2">
         {quizzes.map((quiz, index) => (
-          <div key={quiz._id} className="flex items-center"> 
+          <div key={quiz._id} className="flex items-center">
             <input
               type="checkbox"
-              id={quiz._id} // Ensure unique id for each checkbox
-              checked={selectedQuizzes.includes(quiz.title)} // Check if quizId is in selectedQuizzes
-              onChange={() => handleQuizSelection(quiz.title)} // Toggle quizId in selectedQuizzes
+              id={quiz._id}
+              checked={selectedQuizzes.includes(quiz.title)}
+              onChange={() => handleQuizSelection(quiz.title)}
               className="appearance-none w-4 h-4 border-2 border-gray-300 relative checked:bg-buttonSecondary checked:border-buttonSecondary transition-all bg-cardBackground mr-2"
             />
             <label htmlFor={quiz._id} className="text-bodyText">

@@ -136,7 +136,11 @@ export default function AddCourseForm() {
               />
             </div>
 
-            <QuizDropdown selectedQuizzes={selectedQuizzes} setSelectedQuizzes={setSelectedQuizzes} />
+            <QuizDropdown
+              selectedQuizzes={selectedQuizzes}
+              setSelectedQuizzes={setSelectedQuizzes}
+              noQuizzesMessage="No user quizzes found."
+            />
 
             <div className="mt-6">
               <label className="block mb-2 font-bold text-lg text-bodyText">Chapters:</label>
