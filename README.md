@@ -1,6 +1,6 @@
-# EducationSite 🎓
+# Access-EDUK 🎓
 
-EducationSite is a web application designed as part of a dissertation project to provide an interactive and user-friendly platform for educational purposes. The application allows users to create, manage, and participate in courses and quizzes.
+Access-EDUK is a web application designed as part of a dissertation project to provide an interactive and user-friendly platform for educational purposes. The application allows users to create, manage, and participate in courses and quizzes.
 
 ## Features ✨
 
@@ -26,7 +26,7 @@ Ensure you have the following installed on your system:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/EducationSite.git
+   git clone https://github.com/MattMW04/EducationSite.git
    cd EducationSite
    ```
 
@@ -77,4 +77,4 @@ This project is licensed under the [Apache License 2.0](LICENSE).
 
 ## Contact 📧
 
-For any inquiries or feedback, please contact [your-email@example.com]. ✉️
+For any inquiries or feedback, please contact [6Wilcm63@solent.ac.uk]. ✉️
