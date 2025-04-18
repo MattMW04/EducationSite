@@ -20,6 +20,13 @@ export default function UserCourseList() {
     const fetchCourses = async () => {
       try {
         const response = await fetch('/api/courses/user');
+        if (response.status === 404) {
+          setCourses([]); 
+          return;
+        }
+        if (!response.ok) {
+          throw new Error('Failed to fetch courses');
+        }
         const data = await response.json();
         setCourses(data);
       } catch (error) {
