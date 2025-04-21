@@ -3,8 +3,8 @@ import React, { useState, useRef } from 'react';
 import FormWrapper from '../AccountForms/FormWrapper';
 import { useSession } from 'next-auth/react';
 import QuizFormErrorMessage from './QuizFormErrorMessage';
-import QuizFormSuccessMessage from './QuizFormSuccessMessage'; // Import success message component
-import { set } from 'mongoose';
+import QuizFormSuccessMessage from './QuizFormSuccessMessage'; 
+
 
 interface QuizData {
   title: string;
@@ -37,9 +37,9 @@ export default function AddQuizForm() {
     private: false,
   });
   const [error, setError] = useState<string>('');
-  const [success, setSuccess] = useState<string>(''); // Add success state
+  const [success, setSuccess] = useState<string>(''); 
   const errorRef = useRef<HTMLDivElement>(null);
-  const successRef = useRef<HTMLDivElement>(null); // Add success ref
+  const successRef = useRef<HTMLDivElement>(null); 
 
   React.useEffect(() => {
     if (session?.user?.id) {
@@ -171,6 +171,8 @@ export default function AddQuizForm() {
       });
     } catch (error) {
       console.error('Error creating quiz:', error);
+      console.log('Error creating quiz:', error);
+      console.log(error);
     }
   };
 
