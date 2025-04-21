@@ -20,6 +20,8 @@ export default function HamburgerMenu({navLinks}) {
             {/* Mobile menu with lucide react icon */}
             <button 
                 onClick={handleToggle}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                name= "menu"
                 className="absolute right-2 transition-colors duration-500 hover:bg-gray-200 rounded-full p-2">
                 <Menu className="lg:hidden md:hidden transition-colours duration-500 hover:text-blue-500" size={50} />
             </button>
