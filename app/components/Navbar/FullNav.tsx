@@ -8,7 +8,7 @@ export default function FullNav({ navLinks }) {
     const pathname = usePathname();
     return (
         <div className="flex justify-center items-center w-full relative">
-            <div className="flex-1 flex justify-center space-x-8 mt-2 md:mt-0 max-w-screen-lg">
+            <div className="flex-1 flex justify-center space-x-8 mt-2 md:mt-0 max-w-screen-lg flex-wrap">
                 {navLinks.map((link, index) =>
                     link.subLinks ? (
                         <div key={index} className="dropdown dropdown-bottom dropdown-center">
