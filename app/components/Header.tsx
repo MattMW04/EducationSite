@@ -17,8 +17,8 @@ const Header = () => {
         // ensure that the component is mounted before setting state
         setIsMounted(true); 
 
-        // check if the window width is greater than or equal to 768px
-        const handleResize = () => setIsDesktop(window.innerWidth >= 768);
+        // check if the window width is greater than or equal to 768px - from testing was edited to 840 to avoid overlap issues
+        const handleResize = () => setIsDesktop(window.innerWidth >= 840);
 
         // run on mount
         handleResize();
