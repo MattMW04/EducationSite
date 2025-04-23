@@ -65,9 +65,9 @@ const SignUpForm = () => {
 
             <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); handleSignUp(); }}>
                 <div>
-                    <label className="block text-bodyText font-medium mb-1" htmlFor='username'>Username:</label>
+                    <label className="block text-bodyText font-medium mb-1" htmlFor="username">Username:</label>
                     <input
-                        name="username"
+                        id="username"
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
@@ -81,7 +81,7 @@ const SignUpForm = () => {
                 <div>
                     <label className="block text-bodyText font-medium mb-1" htmlFor="password">Password:</label>
                     <input
-                        name="password"
+                        id="password"
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -93,9 +93,9 @@ const SignUpForm = () => {
                 </div>
 
                 <div>
-                    <label className="block text-bodyText font-medium mb-1" htmlFor="confirmPassword" >Confirm Password:</label>
+                    <label className="block text-bodyText font-medium mb-1" htmlFor="confirmPassword">Confirm Password:</label>
                     <input
-                        name="confirmPassword"
+                        id="confirmPassword"
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
@@ -106,7 +106,7 @@ const SignUpForm = () => {
                 </div>
 
                 <button
-                    name="submit"
+                    id="submit"
                     type="submit"
                     className="w-full bg-buttonPrimary text-buttonText py-3 rounded-md font-bold hover:bg-buttonHover mt-4 cursor-pointer"
                 >
