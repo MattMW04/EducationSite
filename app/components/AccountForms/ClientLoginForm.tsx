@@ -76,7 +76,7 @@ const ClientLoginForm = () =>{
                                 Username:
                             </label>
                             <input
-                                name="username"
+                                id="username"
                                 type="text"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
@@ -92,7 +92,7 @@ const ClientLoginForm = () =>{
                                 Password:
                             </label>
                             <input
-                                name="password"
+                                id="password"
                                 type="password"
                                 value={password}
                                 autoComplete='current-password'
