@@ -184,7 +184,7 @@ export default function AddQuizForm() {
             {error && <QuizFormErrorMessage error={error} errorRef={errorRef} />}
             {success && <QuizFormSuccessMessage success={success} successRef={successRef} />}
             <div>
-              <label className="block text-bodyText font-medium mb-1">Title:</label>
+              <label className="block text-bodyText font-medium mb-1" htmlFor="title">Title:</label>
               <input
                 type="text"
                 name="title"
@@ -195,7 +195,7 @@ export default function AddQuizForm() {
             </div>
 
             <div>
-              <label className="block text-bodyText font-medium mb-1">Description:</label>
+              <label className="block text-bodyText font-medium mb-1" htmlFor="description">Description:</label>
               <input
                 type="text"
                 name="description"
@@ -206,7 +206,7 @@ export default function AddQuizForm() {
             </div>
 
             <div>
-              <label className="block text-bodyText font-medium mb-1">Difficulty:</label>
+              <label className="block text-bodyText font-medium mb-1" htmlFor='difficulty'>Difficulty:</label>
               <select
                 name="difficulty"
                 value={quiz.difficulty}
@@ -220,7 +220,7 @@ export default function AddQuizForm() {
             </div>
 
             <div className="flex items-center mt-4">
-              <label className="text-bodyText ml-2 mr-2">Private ?</label>
+              <label className="text-bodyText ml-2 mr-2" htmlFor="private">Private ?</label>
               <input
               type="checkbox"
               name="private"
@@ -232,14 +232,15 @@ export default function AddQuizForm() {
 
             {/* Questions Section */}
             <div className="mt-6">
-              <label className="block mb-2 font-bold text-lg text-bodyText">Questions:</label>
+              <label className="block mb-2 font-bold text-lg text-bodyText" >Questions:</label>
               {quiz.questions.map((question, qIndex) => (
                 <div
                   key={qIndex}
                   className="mb-4 p-4 border border-divider rounded bg-cardBackground"
                 >
-                  <label className="block text-bodyText font-medium mb-1">Question:</label>
+                  <label className="block text-bodyText font-medium mb-1" htmlFor="questionText">Question:</label>
                   <input
+                    name="questionText"
                     type="text"
                     placeholder="Question text"
                     value={question.questionText}
@@ -251,19 +252,21 @@ export default function AddQuizForm() {
                       key={oIndex}
                       className="flex flex-col sm:flex-row items-start sm:items-center mb-2"
                     >
-                      <label className="block text-bodyText font-medium mb-1 sm:mb-0 sm:mr-2">
+                      <label className="block text-bodyText font-medium mb-1 sm:mb-0 sm:mr-2" htmlFor="optionText">
                         Option:
                       </label>
                       <input
+                        name="optionText"
                         type="text"
                         placeholder="Answer option"
                         value={option.optionText}
                         onChange={(e) => handleOptionChange(e, qIndex, oIndex)}
                         className="flex-grow p-2 border border-divider rounded mb-2 sm:mb-0 sm:mr-2 bg-white focus:ring-2 focus:ring-primary focus:outline-none text-black"
                       />
-                      <label className="flex items-center space-x-2 p-2 mt-0 sm:mt-0 rounded bg-cardBackground">
+                      <label className="flex items-center space-x-2 p-2 mt-0 sm:mt-0 rounded bg-cardBackground" htmlFor="isCorrect">
                       <span className="text-bodyText">Correct ?</span>
                         <input
+                          name="isCorrect"
                           type="checkbox"
                           checked={option.isCorrect}
                           onChange={(e) => handleOptionChange(e, qIndex, oIndex)}
@@ -299,6 +302,7 @@ export default function AddQuizForm() {
             </div>
 
             <button
+              name="submit"
               type="submit"
               className="w-full bg-buttonPrimary text-buttonText py-3 rounded-md font-bold hover:bg-buttonHover mt-4 cursor-pointer"
             >
