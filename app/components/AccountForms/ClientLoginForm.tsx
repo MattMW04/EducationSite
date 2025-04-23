@@ -72,10 +72,11 @@ const ClientLoginForm = () =>{
                 {error && <LoginFormError error={error}  />}
                     <form className="space-y-4">
                         <div>
-                            <label className="block text-bodyText font-medium mb-1">
+                            <label className="block text-bodyText font-medium mb-1" htmlFor="username">
                                 Username:
                             </label>
                             <input
+                                name="username"
                                 type="text"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
@@ -87,10 +88,11 @@ const ClientLoginForm = () =>{
                         </div>
 
                         <div>
-                            <label className="block text-bodyText font-medium mb-1">
+                            <label className="block text-bodyText font-medium mb-1" htmlFor="password">
                                 Password:
                             </label>
                             <input
+                                name="password"
                                 type="password"
                                 value={password}
                                 autoComplete='current-password'

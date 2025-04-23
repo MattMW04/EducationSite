@@ -161,8 +161,9 @@ export default function EditQuizForm({ initialQuizData }: EditQuizFormProps) {
             {error && <QuizFormErrorMessage error={error} errorRef={errorRef} />}
             {success && <QuizFormSuccessMessage success={success} successRef={successRef} />}
             <div>
-              <label className="block text-bodyText font-medium mb-1">Title:</label>
+              <label htmlFor="quiz-title" className="block text-bodyText font-medium mb-1">Title:</label>
               <input
+                id="quiz-title"
                 type="text"
                 name="title"
                 value={quiz.title}
@@ -173,8 +174,9 @@ export default function EditQuizForm({ initialQuizData }: EditQuizFormProps) {
             </div>
 
             <div>
-              <label className="block text-bodyText font-medium mb-1">Description:</label>
+              <label htmlFor="quiz-description" className="block text-bodyText font-medium mb-1">Description:</label>
               <input
+                id="quiz-description"
                 type="text"
                 name="description"
                 value={quiz.description}
@@ -184,8 +186,9 @@ export default function EditQuizForm({ initialQuizData }: EditQuizFormProps) {
             </div>
 
             <div>
-              <label className="block text-bodyText font-medium mb-1">Difficulty:</label>
+              <label htmlFor="quiz-difficulty" className="block text-bodyText font-medium mb-1">Difficulty:</label>
               <select
+                id="quiz-difficulty"
                 name="difficulty"
                 value={quiz.difficulty}
                 onChange={handleChange}
@@ -198,15 +201,15 @@ export default function EditQuizForm({ initialQuizData }: EditQuizFormProps) {
             </div>
 
             <div className="flex items-center mt-4">
-            <label className="text-bodyText ml-2 mr-2">Private ?</label>
+              <label htmlFor="quiz-private" className="text-bodyText ml-2 mr-2">Private ?</label>
               <input
+                id="quiz-private"
                 type="checkbox"
                 name="private"
                 checked={quiz.private}
                 onChange={(e) => setQuiz({ ...quiz, private: e.target.checked })}
-                className="appearance-none w-4 h-4 mr-4 border-2 border-gray-300 relative checked:bg-buttonSecondary checked:border-buttonSecondary transition-all bg-cardBackground "
+                className="appearance-none w-4 h-4 mr-4 border-2 border-gray-300 relative checked:bg-buttonSecondary checked:border-buttonSecondary transition-all bg-cardBackground"
               />
-              
             </div>
 
             {/* Questions Section */}
@@ -217,8 +220,9 @@ export default function EditQuizForm({ initialQuizData }: EditQuizFormProps) {
                   key={qIndex}
                   className="mb-4 p-4 border border-divider rounded bg-cardBackground"
                 >
-                  <label className="block text-bodyText font-medium mb-1">Question:</label>
+                  <label htmlFor={`question-text-${qIndex}`} className="block text-bodyText font-medium mb-1">Question:</label>
                   <input
+                    id={`question-text-${qIndex}`}
                     type="text"
                     placeholder="Question text"
                     value={question.questionText}
@@ -230,22 +234,24 @@ export default function EditQuizForm({ initialQuizData }: EditQuizFormProps) {
                       key={oIndex}
                       className="flex flex-col sm:flex-row items-start sm:items-center mb-2"
                     >
-                      <label className="block text-bodyText font-medium mb-1 sm:mb-0 sm:mr-2">
+                      <label htmlFor={`option-text-${qIndex}-${oIndex}`} className="block text-bodyText font-medium mb-1 sm:mb-0 sm:mr-2">
                         Option:
                       </label>
                       <input
+                        id={`option-text-${qIndex}-${oIndex}`}
                         type="text"
                         placeholder="Answer option"
                         value={option.optionText}
                         onChange={(e) => handleOptionChange(e, qIndex, oIndex)}
                         className="flex-grow p-2 border border-divider rounded mb-2 sm:mb-0 sm:mr-2 bg-white focus:ring-2 focus:ring-primary focus:outline-none text-black"
                       />
-                      <label className="flex items-center space-x-2 p-2 mt-0 sm:mt-0 rounded bg-cardBackground">
+                      <label htmlFor={`option-correct-${qIndex}-${oIndex}`} className="flex items-center space-x-2 p-2 mt-0 sm:mt-0 rounded bg-cardBackground">
                         <input
+                          id={`option-correct-${qIndex}-${oIndex}`}
                           type="checkbox"
                           checked={option.isCorrect}
                           onChange={(e) => handleOptionChange(e, qIndex, oIndex)}
-                          className="appearance-none w-4 h-4 border-2 border-gray-300  relative checked:bg-buttonSecondary checked:border-buttonSecondary transition-all"
+                          className="appearance-none w-4 h-4 border-2 border-gray-300 relative checked:bg-buttonSecondary checked:border-buttonSecondary transition-all"
                         />
                         <span className="text-bodyText">Correct ?</span>
                       </label>

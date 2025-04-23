@@ -50,7 +50,7 @@ export default function EditCourseForm({ courseName }: EditCourseFormProps) {
         setSelectedQuizzes(course.quizzes || []);
       } catch (error) {
         console.error("Error fetching course:", error);
-        setSelectedQuizzes([]); 
+        setSelectedQuizzes([]);
       }
     };
     fetchCourse();
@@ -118,8 +118,9 @@ export default function EditCourseForm({ courseName }: EditCourseFormProps) {
             {error && <QuizFormErrorMessage error={error} errorRef={errorRef} />}
             {success && <QuizFormSuccessMessage success={success} successRef={successRef} />}
             <div>
-              <label className="block text-bodyText font-medium mb-1">Title:</label>
+              <label htmlFor="course-title" className="block text-bodyText font-medium mb-1">Title:</label>
               <input
+                id="course-title"
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -130,8 +131,9 @@ export default function EditCourseForm({ courseName }: EditCourseFormProps) {
             </div>
 
             <div>
-              <label className="block text-bodyText font-medium mb-1">Description:</label>
+              <label htmlFor="course-description" className="block text-bodyText font-medium mb-1">Description:</label>
               <textarea
+                id="course-description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="w-full p-3 border border-divider rounded-md bg-white focus:ring-2 focus:ring-primary focus:outline-none text-black"
@@ -139,8 +141,9 @@ export default function EditCourseForm({ courseName }: EditCourseFormProps) {
             </div>
 
             <div className="flex items-center mt-4">
-              <label className="text-bodyText ml-2 mr-2">Private ?</label>
+              <label htmlFor="private-course" className="text-bodyText ml-2 mr-2">Private ?</label>
               <input
+                id="private-course"
                 type="checkbox"
                 checked={privateCourse}
                 onChange={(e) => setPrivateCourse(e.target.checked)}
@@ -158,16 +161,18 @@ export default function EditCourseForm({ courseName }: EditCourseFormProps) {
               <label className="block mb-2 font-bold text-lg text-bodyText">Chapters:</label>
               {chapters.map((chapter, index) => (
                 <div key={index} className="mb-4 p-4 border border-divider rounded bg-cardBackground">
-                  <label className="block text-bodyText font-medium mb-1">Chapter Title:</label>
+                  <label htmlFor={`chapter-title-${index}`} className="block text-bodyText font-medium mb-1">Chapter Title:</label>
                   <input
+                    id={`chapter-title-${index}`}
                     type="text"
                     placeholder="Chapter Title"
                     value={chapter.title}
                     onChange={(e) => handleChapterChange(index, "title", e.target.value)}
                     className="w-full p-2 border border-divider rounded mb-2 bg-white focus:ring-2 focus:ring-primary focus:outline-none text-black"
                   />
-                  <label className="block text-bodyText font-medium mb-1">Chapter Content:</label>
+                  <label htmlFor={`chapter-content-${index}`} className="block text-bodyText font-medium mb-1">Chapter Content:</label>
                   <textarea
+                    id={`chapter-content-${index}`}
                     placeholder="Chapter Content"
                     value={chapter.content}
                     onChange={(e) => handleChapterChange(index, "content", e.target.value)}
