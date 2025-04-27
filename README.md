@@ -24,48 +24,6 @@ The application is live and accessible at: [AccessEDUK](https://access-eduk.verc
 
 ## Getting Started 🚀
 
-### Prerequisites ✅
-
-Ensure you have the following installed on your system:
-- [Node.js](https://nodejs.org/) (v16 or higher) 🟢
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) 📦
-- [MongoDB](https://www.mongodb.com/) (local or cloud instance) 🗄️
-
-### Installation 🛠️
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/MattMW04/EducationSite.git
-   cd EducationSite
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-3. Configure environment variables:
-   - Create a `.env` file in the root directory.
-   - Add the following variables:
-     ```env
-     NEXTAUTH_SECRET=your_secret
-     MONGODB_URI=your_mongodb_connection_string
-     NEXT_PUBLIC_API_URL=http://localhost:3000
-     ```
-
-### Running the Application ▶️
-
-1. Start the development server:
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
-
-2. Open your browser and navigate to `http://localhost:3000`. 🌍
-
 ## Using the Application 📖
 
 ### Courses 📚
@@ -122,6 +80,48 @@ Ensure you have the following installed on your system:
 
 #### Logging Out
 1. Click the "Logout" button in the navigation bar to end your session.
+
+### Prerequisites ✅
+
+Ensure you have the following installed on your system:
+- [Node.js](https://nodejs.org/) (v16 or higher) 🟢
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) 📦
+- [MongoDB](https://www.mongodb.com/) (local or cloud instance) 🗄️
+
+### Installation 🛠️
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/MattMW04/EducationSite.git
+   cd EducationSite
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Configure environment variables:
+   - Create a `.env` file in the root directory.
+   - Add the following variables:
+     ```env
+     NEXTAUTH_SECRET=your_secret
+     MONGODB_URI=your_mongodb_connection_string
+     NEXT_PUBLIC_API_URL=http://localhost:3000
+     ```
+
+### Running the Application ▶️
+
+1. Start the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+2. Open your browser and navigate to `http://localhost:3000`. 🌍
 
 ## Building for Production 🏗️
 
