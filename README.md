@@ -66,7 +66,64 @@ Ensure you have the following installed on your system:
 
 2. Open your browser and navigate to `http://localhost:3000`. 🌍
 
-### Building for Production 🏗️
+## Using the Application 📖
+
+### Courses 📚
+
+#### Creating a Course
+1. Navigate to the "Create Course" page from the dashboard.
+2. Fill in the course details, including:
+   - Title
+   - Description
+   - Chapters (add multiple chapters with titles and content).
+   - Optionally link quizzes to the course.
+3. Set the course visibility (Public or Private).
+4. Click "Create Course" to save.
+
+#### Viewing Public Courses
+1. Go to the "All Courses" page.
+2. Browse through the list of public courses.
+3. Click "View Course" to see course details and linked quizzes.
+
+#### Managing Your Courses
+1. Navigate to the "Your Courses" page.
+2. Edit or delete your courses using the provided options.
+
+### Quizzes 📝
+
+#### Creating a Quiz
+1. Navigate to the "Create Quiz" page from the dashboard.
+2. Fill in the quiz details, including:
+   - Title
+   - Description
+   - Difficulty level (Easy, Medium, Hard).
+   - Add questions with multiple options and mark the correct answers.
+3. Set the quiz visibility (Public or Private).
+4. Click "Create Quiz" to save.
+
+#### Taking a Quiz
+1. Browse public quizzes on the "All Quizzes" page.
+2. Click "Go to Quiz" to start.
+3. Answer the questions and submit to view your score.
+
+#### Managing Your Quizzes
+1. Navigate to the "Your Quizzes" page.
+2. Edit or delete your quizzes using the provided options.
+
+### Login 🔒
+
+#### Registering an Account
+1. Click "Sign Up" on the login page.
+2. Fill in your details and submit the form.
+
+#### Logging In
+1. Enter your credentials on the login page.
+2. Click "Login" to access your account.
+
+#### Logging Out
+1. Click the "Logout" button in the navigation bar to end your session.
+
+## Building for Production 🏗️
 
 To build the application for production:
 ```bash
