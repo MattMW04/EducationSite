@@ -49,13 +49,13 @@ export default function AddQuizForm() {
 
   React.useEffect(() => {
     if (error) {
-      errorRef.current?.scrollIntoView({ behavior: 'smooth' });
+      errorRef.current?.scrollIntoView({ behavior: 'smooth' }); // Scroll to error message
     }
   }, [error]);
 
   React.useEffect(() => {
     if (success) {
-      successRef.current?.scrollIntoView({ behavior: 'smooth' });
+      successRef.current?.scrollIntoView({ behavior: 'smooth' }); // Scroll to success message
     }
   }, [success]);
 
@@ -71,13 +71,13 @@ export default function AddQuizForm() {
 
   const addOption = (qIndex: number) => {
     const updatedQuestions = [...quiz.questions];
-    updatedQuestions[qIndex].options.push({ optionText: '', isCorrect: false });
+    updatedQuestions[qIndex].options.push({ optionText: '', isCorrect: false }); // Add a new option to the question at qIndex
     setQuiz({ ...quiz, questions: updatedQuestions });
   };
 
   const deleteOption = (qIndex: number, oIndex: number) => {
     const updatedQuestions = [...quiz.questions];
-    updatedQuestions[qIndex].options.splice(oIndex, 1);
+    updatedQuestions[qIndex].options.splice(oIndex, 1); // Remove the option at oIndex
     setQuiz({ ...quiz, questions: updatedQuestions });
   };
 
@@ -86,7 +86,7 @@ export default function AddQuizForm() {
     qIndex: number
   ) => {
     const updatedQuestions = [...quiz.questions];
-    updatedQuestions[qIndex].questionText = e.target.value;
+    updatedQuestions[qIndex].questionText = e.target.value; 
     setQuiz({ ...quiz, questions: updatedQuestions });
   };
 
@@ -97,7 +97,7 @@ export default function AddQuizForm() {
   ) => {
     const updatedQuestions = [...quiz.questions];
     if (e.target.type === 'checkbox') {
-      updatedQuestions[qIndex].options[oIndex].isCorrect = e.target.checked;
+      updatedQuestions[qIndex].options[oIndex].isCorrect = e.target.checked; 
     } else {
       updatedQuestions[qIndex].options[oIndex].optionText = e.target.value;
     }
@@ -113,23 +113,23 @@ export default function AddQuizForm() {
     // Validate required fields
     if (!quiz.title.trim() || !quiz.description.trim() || !quiz.difficulty) {
       setError('Please fill out all required fields.');
-      setSuccess(''); // Clear success message
+      setSuccess(''); 
       return;
     }
     for (const question of quiz.questions) {
       if (!question.questionText.trim()) {
         setError('Each question must have text.');
-        setSuccess(''); // Clear success message
+        setSuccess(''); 
         return;
       }
       if (!question.options.some((opt) => opt.isCorrect)) {
         setError('Each question must have at least one correct option.');
-        setSuccess(''); // Clear success message
+        setSuccess(''); 
         return;
       }
     }
     setError('');
-    setSuccess(''); // Reset success message
+    setSuccess(''); 
 
     const quizData = {
       title: quiz.title,

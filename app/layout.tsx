@@ -42,7 +42,7 @@ export default function RootLayout({ children}: Readonly<{ children: React.React
           <Footer />
         </ClientSessionProvider>
         
-        {/* ToastContainer placed globally */}
+        {/* ToastContainer  */}
         <ToastContainer />
       </body>
     </html>

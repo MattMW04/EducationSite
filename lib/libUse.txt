@@ -1,2 +1,0 @@
-Use for: Modules or logic that interacts with external systems ie API, authentication
-may require state
