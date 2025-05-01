@@ -42,7 +42,7 @@ async function fetchCourseData(courseName: string) {
     }
 
     const courseData = await response.json();
-    return courseData?.data?.[0] || null; // Access the first element of the 'data' array
+    return courseData?.data?.[0] || null; // Access the first element of the  array
   } catch (error) {
     console.error("Error during fetch:", error);
     throw error;

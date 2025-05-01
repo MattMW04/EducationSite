@@ -1,6 +1,12 @@
 import { cookies } from "next/headers";
 import QuizWrapper from "@/app/components/Quizzes/QuizWrapper";
 
+export const metadata = {
+    title: 'AccessEDUK: Quiz',
+    description: 'Attempt a quiz',
+};
+
+
 async function fetchQuizData(QuizName: string) {
     const cookieStore = await cookies();
 

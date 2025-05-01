@@ -46,7 +46,7 @@ export default function AddCourseForm() {
   };
 
   const deleteChapter = (index: number) => {
-    setChapters(chapters.filter((_, i) => i !== index));
+    setChapters(chapters.filter((_, i) => i !== index)); // Remove the chapter at the specified index
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

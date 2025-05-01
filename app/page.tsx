@@ -1,5 +1,11 @@
 import Link from "next/link";
 
+export const metadata = {
+  title: "AccessEDUK: Home",
+  description: "Welcome to AccessEDUK, your platform for creating and sharing quizzes.",
+  keywords: "AccessEDUK, quizzes, education, accessibility",
+};
+
 const HomePage = () => {
   return (
     <div className="flex flex-col min-h-screen bg-background text-white">

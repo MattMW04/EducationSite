@@ -1,6 +1,11 @@
 
 import React from 'react';
 
+export const metadata = {
+    title: 'AccessEDUK: Dashboard',
+    description: 'Explore the features of AccessEDUK',
+};
+
 
 const DashboardPage: React.FC = () => {
     const features = [
