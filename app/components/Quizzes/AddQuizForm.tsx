@@ -187,6 +187,7 @@ export default function AddQuizForm() {
               <label className="block text-bodyText font-medium mb-1" htmlFor="title">Title:</label>
               <input
                 id="title"
+                name="title"
                 type="text"
                 value={quiz.title}
                 onChange={handleChange}
@@ -198,6 +199,7 @@ export default function AddQuizForm() {
               <label className="block text-bodyText font-medium mb-1" htmlFor="description">Description:</label>
               <input
                 id="description"
+                name="description"
                 type="text"
                 value={quiz.description}
                 onChange={handleChange}
